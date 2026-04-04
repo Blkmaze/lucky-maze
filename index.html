@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lucky Maze — Spin. Scratch. Win.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #0d0a14;
+  --bg2: #130f1e;
+  --surface: #1a1428;
+  --surface2: #221a35;
+  --surface3: #2d2445;
+  --border: #3d2f5c;
+  --border2: #4f3d75;
+  --purple: #7c3aed;
+  --purple2: #9d5cf6;
+  --purple3: #b87eff;
+  --purple-dim: rgba(124,58,237,0.15);
+  --gold: #f5c842;
+  --gold2: #ffd700;
+  --gold3: #ffe566;
+  --gold-dim: rgba(245,200,66,0.12);
+  --gold-glow: rgba(255,215,0,0.2);
+  --text: #f0eaff;
+  --text2: #a89ac5;
+  --text3: #6b5a8a;
+  --green: #22c55e;
+  --red: #ef4444;
+  --cashapp: #00D632;
+  --paypal: #0070ba;
+  --coin-color: #f5c842;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUND EFFECTS ─────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(124,58,237,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 80% 90%, rgba(245,200,66,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 60% 40%, rgba(157,92,246,0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Maze grid overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,10,20,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 20px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold3) 50%, var(--purple3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  font-size: 12px;
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, var(--text2), var(--purple3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: -4px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coin-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 6px 14px 6px 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.coin-display:hover { border-color: var(--gold); }
+
+.coin-icon {
+  width: 26px; height: 26px;
+  background: radial-gradient(circle at 35% 35%, var(--gold3), var(--gold));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  box-shadow: 0 0 8px var(--gold-glow);
+  font-weight: 900;
+  color: #7a5900;
+  flex-shrink: 0;
+}
+
+.coin-amount {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.sc-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--purple-dim);
+  border: 1px solid rgba(124,58,237,0.3);
+  border-radius: 24px;
+  padding: 6px 14px 6px 8px;
+}
+
+.sc-icon {
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  color: white;
+  flex-shrink: 0;
+}
+
+.sc-amount {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple3);
+}
+
+.get-coins-btn {
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none;
+  border-radius: 20px;
+  color: #1a0e00;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.get-coins-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px var(--gold-glow); }
+
+/* ── NAV TABS ─────────────────────────────────────────── */
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 12px 20px;
+  overflow-x: auto;
+  position: relative;
+  z-index: 1;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  color: var(--text2);
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-tab:hover { border-color: var(--border2); color: var(--text); }
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border-color: var(--purple2);
+  color: white;
+  box-shadow: 0 0 16px rgba(124,58,237,0.4);
+}
+
+/* ── MAIN CONTENT ─────────────────────────────────────── */
+.main {
+  padding: 0 20px 80px;
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── HERO BANNER ─────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #1a0e35 0%, #2d1a50 50%, #1a1428 100%);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg, transparent, transparent 20px,
+    rgba(245,200,66,0.02) 20px, rgba(245,200,66,0.02) 21px
+  );
+}
+
+.hero-text { position: relative; }
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold3), var(--gold), var(--purple3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.hero-sub { font-size: 14px; color: var(--text2); margin-bottom: 16px; }
+
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.hero-btn-primary {
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none;
+  border-radius: 24px;
+  color: #1a0e00;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.hero-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--gold-glow); }
+
+.hero-btn-secondary {
+  background: rgba(124,58,237,0.2);
+  border: 1px solid var(--purple);
+  border-radius: 24px;
+  color: var(--purple3);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.hero-btn-secondary:hover { background: rgba(124,58,237,0.3); }
+
+.hero-prizes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.jackpot-display {
+  text-align: center;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 10px 20px;
+  box-shadow: 0 0 20px rgba(245,200,66,0.15);
+}
+.jackpot-label { font-size: 9px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
+.jackpot-amount {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 900;
+  color: var(--gold2);
+  text-shadow: 0 0 20px var(--gold-glow);
+  line-height: 1.1;
+}
+
+/* ── SLOT MACHINE ─────────────────────────────────────── */
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border2), transparent);
+}
+
+.slot-machine {
+  background: linear-gradient(135deg, #1a1428, #221a35);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slot-machine::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--gold), var(--purple));
+}
+
+.slot-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.slot-game-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold-glow);
+}
+
+.slot-bet-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bet-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+
+.bet-btns { display: flex; gap: 4px; }
+.bet-btn {
+  padding: 4px 10px;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Cinzel', serif;
+}
+.bet-btn:hover { border-color: var(--gold); color: var(--gold); }
+.bet-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+/* ── SLOT MACHINE — LAVISH LUCK STYLE ───────────────── */
+.slot-reels {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+/* Outer frame — the machine body */
+.reels-frame {
+  position: relative;
+  background: #060410;
+  border: 3px solid #3d2f5c;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow:
+    inset 0 0 40px rgba(0,0,0,0.8),
+    0 0 30px rgba(124,58,237,0.2);
+}
+
+/* Gradient overlays top/bottom — dim the outer rows */
+.reels-frame::before,
+.reels-frame::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 80px;
+  z-index: 10;
+  pointer-events: none;
+}
+.reels-frame::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(6,4,16,0.92) 0%, rgba(6,4,16,0.5) 60%, transparent 100%);
+}
+.reels-frame::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(6,4,16,0.92) 0%, rgba(6,4,16,0.5) 60%, transparent 100%);
+}
+
+/* Gold win line across all reels */
+.win-line-bar {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  transform: translateY(-50%);
+  height: 90px;
+  z-index: 9;
+  pointer-events: none;
+  border-top: 2px solid rgba(245,200,66,0.5);
+  border-bottom: 2px solid rgba(245,200,66,0.5);
+  background: rgba(245,200,66,0.04);
+  box-shadow:
+    0 0 12px rgba(245,200,66,0.2),
+    inset 0 0 20px rgba(245,200,66,0.05);
+}
+
+.win-line-bar.winning {
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.1);
+  box-shadow: 0 0 24px rgba(245,200,66,0.5), inset 0 0 30px rgba(245,200,66,0.1);
+  animation: winFlash 0.4s ease infinite alternate;
+}
+@keyframes winFlash {
+  from { box-shadow: 0 0 20px rgba(245,200,66,0.4); }
+  to   { box-shadow: 0 0 40px rgba(245,200,66,0.8), 0 0 60px rgba(245,200,66,0.3); }
+}
+
+/* Reels strip container */
+.reels-inner {
+  display: flex;
+  gap: 3px;
+  padding: 4px;
+}
+
+.reel-container {
+  flex: 1;
+  height: 270px; /* 3 rows × 90px */
+  overflow: hidden;
+  position: relative;
+  background: transparent;
+}
+
+/* Dividers between reels */
+.reel-container + .reel-container {
+  border-left: 1px solid rgba(61,47,92,0.5);
+}
+
+.reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+.reel-symbol {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(36px, 7vw, 56px);
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+}
+
+/* Subtle glow on center row symbols when winning */
+.reel-symbol.winning-sym {
+  filter: drop-shadow(0 0 12px var(--gold)) brightness(1.3);
+  animation: symBounce 0.3s ease infinite alternate;
+}
+@keyframes symBounce {
+  from { transform: scale(1); }
+  to   { transform: scale(1.1); }
+}
+
+/* Spin controls */
+.slot-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.spin-btn {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: 1px solid var(--purple3);
+  border-radius: 50px;
+  color: white;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 48px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1px;
+}
+
+.spin-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+.spin-btn:hover::before { left: 150%; }
+.spin-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(124,58,237,0.6); }
+.spin-btn:active { transform: scale(0.97); }
+.spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.spin-cost {
+  font-size: 11px;
+  color: var(--text3);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Win message */
+#slotWinMsg {
+  min-height: 28px;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold-glow);
+  margin-bottom: 8px;
+  transition: all 0.3s;
+}
+
+/* ── SCRATCH CARDS ────────────────────────────────────── */
+.scratch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.scratch-card {
+  background: linear-gradient(135deg, #1a1428, #221a35);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.scratch-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,200,66,0.15); }
+.scratch-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--purple), var(--gold));
+}
+
+.scratch-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.scratch-canvas-wrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0a0614;
+  height: 100px;
+}
+
+canvas.scratch {
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: 10px;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.scratch-reveal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scratch-reveal-emoji { font-size: 32px; }
+.scratch-reveal-amount {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.scratch-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.scratch-cost { font-size: 11px; color: var(--text3); }
+.scratch-play-btn {
+  background: var(--gold-dim);
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 8px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Cinzel', serif;
+}
+.scratch-play-btn:hover { background: rgba(245,200,66,0.25); }
+
+/* ── DAILY BONUS ──────────────────────────────────────── */
+.daily-bonus-card {
+  background: linear-gradient(135deg, #1a1428, #2d1a50);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.daily-bonus-info { flex: 1; }
+.daily-bonus-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.daily-bonus-sub { font-size: 12px; color: var(--text2); }
+
+.daily-claim-btn {
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none;
+  border-radius: 20px;
+  color: #1a0e00;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 9px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.daily-claim-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px var(--gold-glow); }
+.daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; background: #555; color: #aaa; }
+
+/* ── GET COINS MODAL ─────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.open { display: flex; }
+
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideUp { from { transform:translateY(24px);opacity:0; } to { transform:translateY(0);opacity:1; } }
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  max-width: 420px;
+  width: 100%;
+  overflow: hidden;
+  animation: slideUp 0.25s ease;
+  position: relative;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #1a0e35, #2d1a50);
+  padding: 24px 24px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.modal-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--gold), var(--purple));
+}
+
+.modal-icon { font-size: 40px; margin-bottom: 8px; }
+.modal-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.modal-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+.modal-body { padding: 20px 24px 24px; }
+
+.modal-overlay { cursor: default; }
+
+.modal-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.15s;
+  z-index: 10;
+  line-height: 1;
+}
+.modal-close:hover { background: rgba(255,255,255,0.28); transform: scale(1.1); }
+
+/* Coin packages */
+.coin-packages { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+.coin-pkg {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.coin-pkg:hover { border-color: var(--gold); background: var(--gold-dim); }
+.coin-pkg.featured { border-color: var(--purple2); background: var(--purple-dim); }
+
+.coin-pkg-left { display: flex; align-items: center; gap: 10px; }
+.coin-pkg-emoji { font-size: 24px; }
+.coin-pkg-info {}
+.coin-pkg-coins { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--gold); }
+.coin-pkg-bonus { font-size: 11px; color: var(--purple3); }
+.coin-pkg-badge {
+  font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px;
+  background: var(--purple); color: white; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.coin-pkg-price {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Free coins section */
+.free-coins-section {
+  background: var(--gold-dim);
+  border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.free-coins-title { font-size: 11px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.free-option {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0;
+  font-size: 12px; color: var(--text2);
+  border-bottom: 1px solid rgba(245,200,66,0.1);
+}
+.free-option:last-child { border-bottom: none; }
+.free-option-btn {
+  background: rgba(245,200,66,0.15); border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 6px; color: var(--gold); font-size: 11px; font-weight: 700;
+  padding: 3px 10px; cursor: pointer; transition: all 0.15s;
+}
+.free-option-btn:hover { background: rgba(245,200,66,0.25); }
+
+/* Payment options */
+.pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.pay-option {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 10px; text-align: center;
+  cursor: pointer; transition: all 0.15s;
+}
+.pay-option:hover { border-color: var(--border2); background: var(--surface3); }
+.pay-option.selected { border-color: var(--gold); background: var(--gold-dim); }
+.pay-option-icon { font-size: 20px; margin-bottom: 4px; }
+.pay-option-name { font-size: 11px; font-weight: 700; color: var(--text2); }
+
+.buy-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none; border-radius: 12px;
+  color: #1a0e00;
+  font-family: 'Cinzel', serif;
+  font-size: 15px; font-weight: 700;
+  padding: 13px; cursor: pointer;
+  transition: all 0.15s;
+}
+.buy-btn:hover { box-shadow: 0 4px 20px var(--gold-glow); transform: translateY(-1px); }
+
+/* ── REDEEM MODAL ─────────────────────────────────────── */
+.redeem-form { display: flex; flex-direction: column; gap: 12px; }
+.form-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.form-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus { border-color: var(--purple2); }
+.redeem-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: 1px solid var(--purple3);
+  border-radius: 12px;
+  color: white;
+  font-family: 'Cinzel', serif;
+  font-size: 15px; font-weight: 700;
+  padding: 13px; cursor: pointer;
+  transition: all 0.15s;
+}
+.redeem-btn:hover { box-shadow: 0 4px 20px rgba(124,58,237,0.5); }
+
+/* ── WIN CELEBRATION ─────────────────────────────────── */
+.win-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  z-index: 600;
+  align-items: center;
+  justify-content: center;
+}
+.win-overlay.open { display: flex; }
+
+.win-box {
+  background: linear-gradient(135deg, #1a0e35, #2d1a50);
+  border: 2px solid var(--gold);
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 0 60px rgba(245,200,66,0.3);
+  max-width: 320px;
+  width: 100%;
+}
+
+.win-emoji { font-size: 60px; margin-bottom: 12px; animation: bounce 0.5s ease infinite alternate; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+.win-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold-glow);
+  margin-bottom: 8px;
+}
+.win-amount {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--purple3);
+  margin-bottom: 20px;
+}
+.win-close-btn {
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none; border-radius: 20px;
+  color: #1a0e00; font-family: 'Cinzel', serif;
+  font-size: 14px; font-weight: 700;
+  padding: 11px 28px; cursor: pointer;
+  transition: all 0.15s;
+}
+.win-close-btn:hover { transform: translateY(-1px); }
+
+/* Confetti particles */
+.confetti-piece {
+  position: fixed;
+  width: 8px; height: 8px;
+  pointer-events: none;
+  z-index: 700;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── SC INFO ─────────────────────────────────────────── */
+.sc-info-row {
+  background: var(--purple-dim);
+  border: 1px solid rgba(124,58,237,0.25);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 10px;
+}
+.sc-info-left { font-size: 13px; color: var(--text2); }
+.sc-info-left strong { color: var(--purple3); }
+.redeem-sc-btn {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: none; border-radius: 16px;
+  color: white; font-family: 'Cinzel', serif;
+  font-size: 12px; font-weight: 700;
+  padding: 8px 18px; cursor: pointer;
+  white-space: nowrap; transition: all 0.15s;
+}
+.redeem-sc-btn:hover { box-shadow: 0 4px 16px rgba(124,58,237,0.5); }
+
+/* ── BOTTOM NAV (mobile) ─────────────────────────────── */
+@media (max-width: 600px) {
+  .header { padding: 0 12px; height: 56px; }
+  .logo { font-size: 16px; }
+  .logo span { display: none; }
+  .coin-display, .sc-display { padding: 5px 10px 5px 6px; }
+  .coin-amount, .sc-amount { font-size: 12px; }
+  .get-coins-btn { font-size: 11px; padding: 6px 12px; }
+  .main { padding: 0 12px 80px; }
+  .hero { flex-direction: column; gap: 16px; }
+  .spin-btn { padding: 12px 36px; font-size: 16px; }
+  .scratch-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── TOAST ───────────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 800;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── MISSIONS BAR ─────────────────────────────────────── */
+.missions-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.mission-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.15s;
+}
+.mission-card:hover { border-color: var(--border2); }
+.mission-card.done { border-color: var(--green); background: rgba(34,197,94,0.06); }
+
+.mission-icon { font-size: 20px; margin-bottom: 4px; }
+.mission-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+.mission-progress-bar {
+  height: 4px;
+  background: var(--surface3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.mission-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--gold));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+.mission-reward { font-size: 10px; color: var(--gold); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    Lucky Maze
+    <span>Spin · Scratch · Win</span>
+  </div>
+  <div class="header-right">
+    <div class="coin-display" onclick="openCoinsModal()">
+      <div class="coin-icon">🪙</div>
+      <div class="coin-amount" id="gcDisplay">25,000</div>
+    </div>
+    <div class="sc-display">
+      <div class="sc-icon">SC</div>
+      <div class="sc-amount" id="scDisplay">0.30</div>
+    </div>
+    <button class="get-coins-btn" onclick="openCoinsModal()">+ Get Coins</button>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('slots', this)">🎰 Slots</button>
+  <button class="nav-tab" onclick="showTab('scratch', this)">🎟️ Scratch</button>
+  <button class="nav-tab" onclick="showTab('missions', this)">🎯 Missions</button>
+  <button class="nav-tab" onclick="openRedeemModal()">💰 Redeem SC</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-title">Welcome to<br>Lucky Maze</div>
+      <div class="hero-sub">Free to play · Real cash prizes · Daily bonuses</div>
+      <div class="hero-btns">
+        <button class="hero-btn-primary" onclick="claimDaily()">🎁 Claim Daily Bonus</button>
+        <button class="hero-btn-secondary" onclick="openCoinsModal()">Get More Coins</button>
+      </div>
+    </div>
+    <div class="hero-prizes">
+      <div class="jackpot-display">
+        <div class="jackpot-label">🏆 Jackpot Prize</div>
+        <div class="jackpot-amount" id="jackpotAmt">$500</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY BONUS -->
+  <div class="daily-bonus-card" id="dailyBonusCard">
+    <div style="font-size:28px;">🎁</div>
+    <div class="daily-bonus-info">
+      <div class="daily-bonus-title">Daily Login Bonus</div>
+      <div class="daily-bonus-sub">+20,000 Gold Coins & +0.10 SC — comes back every 24 hours</div>
+    </div>
+    <button class="daily-claim-btn" id="dailyClaimBtn" onclick="claimDaily()">Claim Now</button>
+  </div>
+
+  <!-- SC INFO ROW -->
+  <div class="sc-info-row">
+    <div class="sc-info-left">
+      You have <strong id="scInfoDisplay">0.30 SC</strong> · Min 100 SC to redeem for cash via Cash App or PayPal
+    </div>
+    <button class="redeem-sc-btn" onclick="openRedeemModal()">Redeem SC</button>
+  </div>
+
+  <!-- SLOTS TAB -->
+  <div id="tab-slots">
+    <div class="section-title">🎰 Slot Machines</div>
+
+    <!-- SLOT MACHINE -->
+    <div class="slot-machine">
+      <div class="slot-top">
+        <div class="slot-game-title">🌀 Maze Spinner</div>
+        <div class="slot-bet-row">
+          <span class="bet-label">Bet</span>
+          <div class="bet-btns">
+            <button class="bet-btn active" onclick="setBet(10, this)">10</button>
+            <button class="bet-btn" onclick="setBet(20, this)">20</button>
+            <button class="bet-btn" onclick="setBet(50, this)">50</button>
+            <button class="bet-btn" onclick="setBet(100, this)">100</button>
+            <button class="bet-btn" onclick="setBet(500, this)">500</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="slotWinMsg"></div>
+
+      <!-- REELS FRAME -->
+      <div class="reels-frame" style="margin-bottom:20px;">
+        <div class="win-line-bar" id="winLineBar"></div>
+        <div class="reels-inner" id="slotReels">
+          <div class="reel-container"><div class="reel" id="reel0"></div></div>
+          <div class="reel-container"><div class="reel" id="reel1"></div></div>
+          <div class="reel-container"><div class="reel" id="reel2"></div></div>
+          <div class="reel-container"><div class="reel" id="reel3"></div></div>
+          <div class="reel-container"><div class="reel" id="reel4"></div></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="spin-btn" id="spinBtn" onclick="spin()">SPIN</button>
+        <div class="spin-cost" id="spinCost">Cost: 10 GC per spin</div>
+      </div>
+    </div>
+
+    <!-- PAYTABLE -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:24px;">
+      <div style="font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Paytable</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">💎💎💎💎💎 <span style="color:var(--gold);font-weight:700;">JACKPOT!</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">⭐⭐⭐⭐⭐ <span style="color:var(--gold);font-weight:700;">500× bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">🔔🔔🔔🔔🔔 <span style="color:var(--text);font-weight:700;">200× bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">5× match <span style="color:var(--text);font-weight:700;">100× bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">4× match <span style="color:var(--text);font-weight:700;">10× bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">3× match <span style="color:var(--text);font-weight:700;">3× bet</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRATCH TAB -->
+  <div id="tab-scratch" style="display:none;">
+    <div class="section-title">🎟️ Scratch Cards</div>
+    <div class="scratch-grid" id="scratchGrid"></div>
+  </div>
+
+  <!-- MISSIONS TAB -->
+  <div id="tab-missions" style="display:none;">
+    <div class="section-title">🎯 Daily Missions</div>
+    <div class="missions-row" id="missionsGrid"></div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">How to Earn Free SC</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7;">
+        ✦ Complete all 3 daily missions — earn free SC<br>
+        ✦ Login every day for your daily bonus<br>
+        ✦ Purchase optional Gold Coin packages to receive bonus SC<br>
+        ✦ Accumulate 100 SC minimum to redeem for real cash
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- GET COINS MODAL -->
+<div class="modal-overlay" id="coinsModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal('coinsModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">🪙</div>
+      <div class="modal-title">Get Coins</div>
+      <div class="modal-sub">Purchase Gold Coins or claim free ones</div>
+    </div>
+    <div class="modal-body">
+
+      <!-- Free options -->
+      <div class="free-coins-section">
+        <div class="free-coins-title">🎁 Free Coins</div>
+        <div class="free-option">
+          <span>Daily Login Bonus</span>
+          <span style="color:var(--gold);font-weight:700;font-size:12px;">20K GC + 0.10 SC</span>
+          <button class="free-option-btn" id="modalDailyBtn" onclick="claimDaily(); closeModal('coinsModal')">Claim</button>
+        </div>
+        <div class="free-option">
+          <span>Complete Daily Missions</span>
+          <span style="color:var(--gold);font-weight:700;font-size:12px;">5K GC + 0.05 SC</span>
+          <button class="free-option-btn" onclick="showTab('missions', null); closeModal('coinsModal')">View</button>
+        </div>
+      </div>
+
+      <!-- Packages -->
+      <div class="coin-packages">
+        <div class="coin-pkg" onclick="buyPackage(2.99, 22000, 2)">
+          <div class="coin-pkg-left">
+            <div class="coin-pkg-emoji">🪙</div>
+            <div class="coin-pkg-info">
+              <div class="coin-pkg-coins">22,000 Gold Coins</div>
+              <div class="coin-pkg-bonus">+ 2 Bonus SC</div>
+            </div>
+          </div>
+          <div class="coin-pkg-price">$2.99</div>
+        </div>
+        <div class="coin-pkg featured" onclick="buyPackage(9.99, 130000, 10)">
+          <div class="coin-pkg-left">
+            <div class="coin-pkg-emoji">💰</div>
+            <div class="coin-pkg-info">
+              <div class="coin-pkg-coins">130,000 Gold Coins</div>
+              <div class="coin-pkg-bonus">+ 10 Bonus SC</div>
+            </div>
+            <span class="coin-pkg-badge">Popular</span>
+          </div>
+          <div class="coin-pkg-price">$9.99</div>
+        </div>
+        <div class="coin-pkg" onclick="buyPackage(19.99, 300000, 25)">
+          <div class="coin-pkg-left">
+            <div class="coin-pkg-emoji">💎</div>
+            <div class="coin-pkg-info">
+              <div class="coin-pkg-coins">300,000 Gold Coins</div>
+              <div class="coin-pkg-bonus">+ 25 Bonus SC</div>
+            </div>
+          </div>
+          <div class="coin-pkg-price">$19.99</div>
+        </div>
+        <div class="coin-pkg" onclick="buyPackage(49.99, 850000, 50)">
+          <div class="coin-pkg-left">
+            <div class="coin-pkg-emoji">🏆</div>
+            <div class="coin-pkg-info">
+              <div class="coin-pkg-coins">850,000 Gold Coins</div>
+              <div class="coin-pkg-bonus">+ 50 Bonus SC</div>
+            </div>
+            <span class="coin-pkg-badge" style="background:var(--gold);color:#1a0e00;">Best Value</span>
+          </div>
+          <div class="coin-pkg-price">$49.99</div>
+        </div>
+      </div>
+
+      <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:4px;">
+        Gold Coins are for entertainment only. SC can be redeemed for real prizes. No purchase required to play.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUY PACKAGE MODAL -->
+<div class="modal-overlay" id="buyModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal('buyModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">💳</div>
+      <div class="modal-title">Complete Purchase</div>
+      <div class="modal-sub" id="buyModalSub">130,000 GC + 10 SC — $9.99</div>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:14px;">
+        <div class="form-label">Pay via</div>
+        <div class="pay-grid">
+          <div class="pay-option selected" id="payOpt-cashapp" onclick="selectPayOpt(this,'cashapp')">
+            <div class="pay-option-icon">💚</div>
+            <div class="pay-option-name">Cash App</div>
+          </div>
+          <div class="pay-option" id="payOpt-paypal" onclick="selectPayOpt(this,'paypal')">
+            <div class="pay-option-icon">💙</div>
+            <div class="pay-option-name">PayPal</div>
+          </div>
+        </div>
+      </div>
+      <div id="payInstructions" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;"></div>
+      <button class="buy-btn" onclick="confirmBuyPackage()">Complete Purchase</button>
+      <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">
+        After payment, message Willie on Cash App/PayPal with your username to receive coins.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REDEEM MODAL -->
+<div class="modal-overlay" id="redeemModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal('redeemModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">💰</div>
+      <div class="modal-title">Redeem SC</div>
+      <div class="modal-sub">Min 100 SC required · Paid via Cash App or PayPal</div>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--purple-dim);border:1px solid rgba(124,58,237,0.25);border-radius:10px;padding:12px;margin-bottom:14px;">
+        <div style="font-size:12px;color:var(--text2);">Your SC Balance: <strong style="color:var(--purple3);font-size:16px;" id="redeemScBalance">0.30 SC</strong></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">1 SC = $1.00 USD</div>
+      </div>
+      <div class="redeem-form">
+        <div>
+          <div class="form-label">Amount to Redeem (SC)</div>
+          <input class="form-input" id="redeemAmount" type="number" min="100" placeholder="Minimum 100 SC" />
+        </div>
+        <div>
+          <div class="form-label">Pay to (Cash App $tag or PayPal email)</div>
+          <input class="form-input" id="redeemHandle" type="text" placeholder="$cashtag or email@example.com" />
+        </div>
+        <button class="redeem-btn" onclick="submitRedeem()">Request Redemption</button>
+        <div style="font-size:10px;color:var(--text3);text-align:center;">
+          SC redemptions are reviewed within 24–48 hours. KYC verification required for first redemption.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WIN CELEBRATION -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-box">
+    <div class="win-emoji">🏆</div>
+    <div class="win-title">YOU WON!</div>
+    <div class="win-amount" id="winAmount">+5,000 GC</div>
+    <button class="win-close-btn" onclick="closeWin()">Collect Winnings</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── STATE ────────────────────────────────────────────────
+let gc = 25000;
+let sc = 0.30;
+let currentBet = 10;
+let spinning = false;
+let selectedPay = 'cashapp';
+let pendingPkg = null;
+
+// ── HELPERS ──────────────────────────────────────────────
+function updateDisplays() {
+  document.getElementById('gcDisplay').textContent = gc.toLocaleString();
+  document.getElementById('scDisplay').textContent = sc.toFixed(2);
+  document.getElementById('scInfoDisplay').textContent = sc.toFixed(2) + ' SC';
+  document.getElementById('redeemScBalance').textContent = sc.toFixed(2) + ' SC';
+}
+
+function toast(msg, duration=2500) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), duration);
+}
+
+function openCoinsModal() {
+  document.getElementById('coinsModal').classList.add('open');
+}
+function openRedeemModal() {
+  document.getElementById('redeemModal').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function showTab(name, btn) {
+  ['slots','scratch','missions'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===name ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else {
+    // find matching tab button
+    document.querySelectorAll('.nav-tab').forEach(b => {
+      if (b.textContent.toLowerCase().includes(name)) b.classList.add('active');
+    });
+  }
+  if (name === 'scratch') buildScratchCards();
+  if (name === 'missions') buildMissions();
+}
+
+// ── DAILY BONUS ───────────────────────────────────────────
+const DAILY_KEY = 'lm_daily_claimed';
+function checkDailyBonus() {
+  const last = localStorage.getItem(DAILY_KEY);
+  const now = Date.now();
+  const btn = document.getElementById('dailyClaimBtn');
+  const mBtn = document.getElementById('modalDailyBtn');
+  if (last && now - parseInt(last) < 24*60*60*1000) {
+    btn.disabled = true;
+    btn.textContent = 'Come back tomorrow!';
+    if (mBtn) { mBtn.disabled = true; mBtn.textContent = 'Claimed'; }
+  }
+}
+
+function claimDaily() {
+  const last = localStorage.getItem(DAILY_KEY);
+  if (last && Date.now() - parseInt(last) < 24*60*60*1000) {
+    toast('Already claimed today! Come back in 24 hours.');
+    return;
+  }
+  gc += 20000;
+  sc = parseFloat((sc + 0.10).toFixed(2));
+  localStorage.setItem(DAILY_KEY, Date.now().toString());
+  updateDisplays();
+  const btn = document.getElementById('dailyClaimBtn');
+  btn.disabled = true;
+  btn.textContent = 'Claimed! ✓';
+  checkDailyBonus();
+  showWin('🎁 Daily Bonus!', '+20,000 GC & +0.10 SC');
+}
+
+// ── SLOT MACHINE ──────────────────────────────────────────
+const SYMBOLS = ['🍒','🍋','🍊','🍇','🔔','⭐','💎','🎰','🌀','💫'];
+const WEIGHTS  = [20,  18,  15,  12,  10,  8,   5,   4,   3,   5  ];
+
+// Build a full reel strip (many symbols for smooth scrolling)
+const STRIP_SIZE = 40;
+function buildStrip() {
+  const strip = [];
+  const total = WEIGHTS.reduce((a,b)=>a+b,0);
+  for (let i=0; i<STRIP_SIZE; i++) {
+    let r = Math.random() * total;
+    for (let j=0; j<SYMBOLS.length; j++) {
+      r -= WEIGHTS[j];
+      if (r <= 0) { strip.push(SYMBOLS[j]); break; }
+    }
+  }
+  return strip;
+}
+
+// Reel strips (persistent per session for smooth stop)
+const reelStrips = Array.from({length:5}, () => buildStrip());
+let reelOffsets = [0,0,0,0,0]; // current top position in strip index
+
+const SYM_H = 90; // px per symbol row
+
+function initReels() {
+  for (let r=0; r<5; r++) {
+    const reel = document.getElementById('reel'+r);
+    // Show 5 symbols (2 above + center + 2 below)
+    renderReel(r, reelOffsets[r]);
+  }
+}
+
+function renderReel(r, offset) {
+  const reel = document.getElementById('reel'+r);
+  const strip = reelStrips[r];
+  const n = strip.length;
+  let html = '';
+  for (let i=-1; i<=3; i++) {
+    const idx = ((offset + i) % n + n) % n;
+    html += `<div class="reel-symbol" data-row="${i+1}">${strip[idx]}</div>`;
+  }
+  reel.innerHTML = html;
+  reel.style.transform = 'translateY(0)';
+}
+
+function getCenter(r, offset) {
+  const n = reelStrips[r].length;
+  return reelStrips[r][((offset + 1) % n + n) % n];
+}
+
+async function animateReelSpin(r, targetOffset, duration) {
+  return new Promise(resolve => {
+    const reel = document.getElementById('reel'+r);
+    const strip = reelStrips[r];
+    const n = strip.length;
+    const start = performance.now();
+    const startOffset = reelOffsets[r];
+    const distance = ((targetOffset - startOffset) % n + n) % n;
+    const totalSymbols = distance + STRIP_SIZE * 2; // spin a few full loops
+
+    let lastRendered = -1;
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease out: fast then slow at end
+      const eased = progress < 0.75
+        ? progress / 0.75  // linear for 75%
+        : 1 - Math.pow((progress - 0.75) / 0.25, 2) * 0.15; // slow landing
+
+      const symsMoved = Math.floor(eased * totalSymbols);
+      const currentOffset = (startOffset + symsMoved) % n;
+
+      // Sub-symbol pixel offset for smooth scroll
+      const subPx = (eased * totalSymbols - Math.floor(eased * totalSymbols)) * SYM_H;
+
+      if (symsMoved !== lastRendered) {
+        lastRendered = symsMoved;
+        // Rebuild visible strip
+        let html = '';
+        for (let i=-1; i<=3; i++) {
+          const idx = ((currentOffset + i) % n + n) % n;
+          html += `<div class="reel-symbol">${strip[idx]}</div>`;
+        }
+        reel.innerHTML = html;
+      }
+
+      reel.style.transform = `translateY(${-subPx}px)`;
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        reelOffsets[r] = targetOffset;
+        renderReel(r, targetOffset);
+        resolve();
+      }
+    }
+
+    requestAnimationFrame(tick);
+  });
+}
+
+function weightedRandom() {
+  const total = WEIGHTS.reduce((a,b) => a+b, 0);
+  let r = Math.random() * total;
+  for (let i=0; i<SYMBOLS.length; i++) {
+    r -= WEIGHTS[i];
+    if (r <= 0) return i; // return index
+  }
+  return 0;
+}
+
+async function spin() {
+  if (spinning) return;
+  if (gc < currentBet) {
+    toast('Not enough Gold Coins! Get more coins first.');
+    openCoinsModal();
+    return;
+  }
+  spinning = true;
+  gc -= currentBet;
+  updateDisplays();
+
+  const btn = document.getElementById('spinBtn');
+  btn.disabled = true;
+  btn.textContent = 'SPINNING...';
+  document.getElementById('slotWinMsg').textContent = '';
+  document.getElementById('winLineBar').classList.remove('winning');
+
+  // Pick final center symbol for each reel
+  const n = reelStrips[0].length;
+  const targetOffsets = reelOffsets.map((off, r) => {
+    const symIdx = weightedRandom();
+    // Find next occurrence of that symbol in strip
+    let target = (off + 3) % n;
+    for (let i=0; i<n; i++) {
+      const pos = (off + 3 + i) % n;
+      if (reelStrips[r][pos] === SYMBOLS[symIdx]) { target = pos; break; }
+    }
+    return (target - 1 + n) % n; // offset so this symbol lands in center (row index 1)
+  });
+
+  // Get what will show in center row
+  const results = targetOffsets.map((tgt, r) => {
+    const pos = (tgt + 1) % n;
+    return reelStrips[r][pos];
+  });
+
+  // Spin reels with staggered stops
+  const durations = [1200, 1500, 1800, 2100, 2400];
+  await Promise.all(targetOffsets.map((tgt, r) => animateReelSpin(r, tgt, durations[r])));
+
+  // Check wins
+  const counts = {};
+  results.forEach(s => counts[s] = (counts[s]||0)+1);
+  const maxMatch = Math.max(...Object.values(counts));
+  const matchSym = Object.keys(counts).find(k => counts[k] === maxMatch);
+
+  let winGC = 0, winSC = 0, winMsg = '';
+
+  if (maxMatch === 5) {
+    if (matchSym === '💎') {
+      winGC = currentBet * 1000; winSC = 5; winMsg = '💎 JACKPOT!! 💎'; spawnConfetti();
+    } else if (matchSym === '⭐') {
+      winGC = currentBet * 500; winMsg = '⭐ MEGA WIN! ⭐'; spawnConfetti();
+    } else if (matchSym === '🔔') {
+      winGC = currentBet * 200; winMsg = '🔔 BIG WIN! 🔔';
+    } else {
+      winGC = currentBet * 100; winMsg = `${matchSym}${matchSym}${matchSym} 5 OF A KIND!`;
+    }
+  } else if (maxMatch === 4) {
+    winGC = currentBet * 10; winMsg = `4× ${matchSym} — Big Win!`;
+  } else if (maxMatch === 3) {
+    winGC = currentBet * 3; winMsg = `3× ${matchSym} — You Win!`;
+  }
+
+  if (winGC > 0) {
+    gc += winGC; sc = parseFloat((sc + winSC).toFixed(2));
+    updateDisplays();
+    document.getElementById('slotWinMsg').textContent = winMsg;
+    document.getElementById('slotWinMsg').style.color = winSC > 0 ? 'var(--purple3)' : 'var(--gold)';
+    document.getElementById('winLineBar').classList.add('winning');
+    // Highlight winning symbols
+    document.querySelectorAll('.reel-symbol').forEach((el, i) => {
+      if (Math.floor(i / 5) === 1 && results[i % 5] === matchSym && maxMatch >= 3) {
+        el.classList.add('winning-sym');
+      }
+    });
+    if (maxMatch >= 4) showWin(winMsg, `+${winGC.toLocaleString()} GC${winSC>0?' & +'+winSC+' SC':''}`);
+    updateMissionProgress('win', 1);
+  } else {
+    document.getElementById('slotWinMsg').textContent = 'No match — spin again!';
+    document.getElementById('slotWinMsg').style.color = 'var(--text3)';
+  }
+
+  updateMissionProgress('spin', 1);
+  btn.disabled = false;
+  btn.textContent = 'SPIN';
+  spinning = false;
+}
+
+function setBet(amount, btn) {
+  currentBet = amount;
+  document.querySelectorAll('.bet-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('spinCost').textContent = `Cost: ${amount.toLocaleString()} GC per spin`;
+}
+
+// ── SCRATCH CARDS ─────────────────────────────────────────
+const SCRATCH_CARDS_DEF = [
+  { name: 'GOLD RUSH', cost: 500, theme: ['var(--gold)','#7a5900'], prizes: [0,0,0,0,500,1000,2000,5000], emoji: '🥇' },
+  { name: 'LUCKY 7s', cost: 1000, theme: ['var(--purple3)','#3b1d8a'], prizes: [0,0,0,1000,2000,5000,10000,25000], emoji: '7️⃣' },
+  { name: 'DIAMOND HUNT', cost: 2500, theme: ['#7af3ff','#0a4a5c'], prizes: [0,0,2500,5000,10000,25000,50000,100000], emoji: '💎' },
+  { name: 'MAZE MYSTERY', cost: 5000, theme: ['var(--green)','#0a3a1a'], prizes: [0,0,0,5000,10000,25000,100000,500000], emoji: '🌀' },
+];
+
+let scratchBuilt = false;
+function buildScratchCards() {
+  if (scratchBuilt) return;
+  scratchBuilt = true;
+  const grid = document.getElementById('scratchGrid');
+  grid.innerHTML = '';
+  SCRATCH_CARDS_DEF.forEach((card, i) => {
+    const div = document.createElement('div');
+    div.className = 'scratch-card';
+    div.innerHTML = `
+      <div class="scratch-card-name" style="color:${card.theme[0]}">${card.emoji} ${card.name}</div>
+      <div class="scratch-canvas-wrap" id="scratchWrap${i}">
+        <div class="scratch-reveal" id="scratchReveal${i}">
+          <div class="scratch-reveal-emoji" id="scratchEmoji${i}">❓</div>
+          <div class="scratch-reveal-amount" id="scratchAmt${i}" style="color:${card.theme[0]}">Scratch!</div>
+        </div>
+        <canvas class="scratch" id="scratchCanvas${i}" width="160" height="100"></canvas>
+      </div>
+      <div class="scratch-footer">
+        <span class="scratch-cost">${card.cost.toLocaleString()} GC</span>
+        <button class="scratch-play-btn" style="color:${card.theme[0]};border-color:${card.theme[0]}30;background:${card.theme[0]}15" onclick="playScratch(${i})">New Card</button>
+      </div>`;
+    grid.appendChild(div);
+    initScratchCanvas(i, card);
+  });
+}
+
+function initScratchCanvas(idx, card) {
+  const canvas = document.getElementById('scratchCanvas' + idx);
+  const ctx = canvas.getContext('2d');
+
+  // Size canvas to wrapper
+  const wrap = document.getElementById('scratchWrap' + idx);
+  canvas.width = wrap.offsetWidth || 160;
+  canvas.height = 100;
+
+  // Draw scratchable overlay
+  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  grad.addColorStop(0, '#2d2445');
+  grad.addColorStop(1, '#1a1428');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Pattern text
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.font = '11px sans-serif';
+  for (let y=14; y<canvas.height; y+=18) {
+    for (let x=8; x<canvas.width; x+=40) {
+      ctx.fillText('SCRATCH', x, y);
+    }
+  }
+
+  // Store prize
+  const prize = card.prizes[Math.floor(Math.random() * card.prizes.length)];
+  canvas.dataset.prize = prize;
+  canvas.dataset.cardIdx = idx;
+  canvas.dataset.scratched = '0';
+  canvas.dataset.played = '0';
+
+  // Scratch interaction
+  let drawing = false;
+  const scratch = (x, y) => {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 18, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Check coverage
+    const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let transparent = 0;
+    for (let i=3; i<pixels.length; i+=4) { if (pixels[i] < 128) transparent++; }
+    const pct = transparent / (pixels.length/4);
+    if (pct > 0.5 && canvas.dataset.scratched === '0') {
+      canvas.dataset.scratched = '1';
+      revealScratch(idx, parseInt(canvas.dataset.prize), card);
+    }
+  };
+
+  const getPos = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    return { x: (touch.clientX - rect.left) * (canvas.width / rect.width), y: (touch.clientY - rect.top) * (canvas.height / rect.height) };
+  };
+
+  canvas.addEventListener('mousedown', (e) => { drawing = true; scratch(...Object.values(getPos(e))); });
+  canvas.addEventListener('mousemove', (e) => { if (drawing) scratch(...Object.values(getPos(e))); });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; scratch(...Object.values(getPos(e))); });
+  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (drawing) scratch(...Object.values(getPos(e))); });
+  canvas.addEventListener('touchend', () => drawing = false);
+}
+
+function playScratch(idx) {
+  const card = SCRATCH_CARDS_DEF[idx];
+  if (gc < card.cost) { toast('Not enough coins!'); openCoinsModal(); return; }
+  gc -= card.cost;
+  updateDisplays();
+  // Reset reveal
+  document.getElementById('scratchEmoji' + idx).textContent = '❓';
+  document.getElementById('scratchAmt' + idx).textContent = 'Scratch!';
+  initScratchCanvas(idx, card);
+  updateMissionProgress('scratch', 1);
+  toast(`New ${card.name} card ready — scratch to reveal!`);
+}
+
+function revealScratch(idx, prize, card) {
+  const emojiEl = document.getElementById('scratchEmoji' + idx);
+  const amtEl = document.getElementById('scratchAmt' + idx);
+  if (prize > 0) {
+    gc += prize;
+    updateDisplays();
+    emojiEl.textContent = '🏆';
+    amtEl.textContent = '+' + prize.toLocaleString() + ' GC';
+    amtEl.style.color = 'var(--gold)';
+    if (prize >= 10000) showWin('🎟️ Scratch Winner!', '+' + prize.toLocaleString() + ' GC');
+    else toast(`🎉 You won ${prize.toLocaleString()} GC!`);
+    updateMissionProgress('win', 1);
+  } else {
+    emojiEl.textContent = '😔';
+    amtEl.textContent = 'No win';
+    amtEl.style.color = 'var(--text3)';
+  }
+}
+
+// ── MISSIONS ──────────────────────────────────────────────
+const MISSIONS = [
+  { id: 'spin', icon: '🎰', label: 'Spin 10x', goal: 10, reward: '5,000 GC + 0.05 SC' },
+  { id: 'scratch', icon: '🎟️', label: 'Scratch 3 cards', goal: 3, reward: '3,000 GC + 0.03 SC' },
+  { id: 'win', icon: '🏆', label: 'Win 5 times', goal: 5, reward: '10,000 GC + 0.10 SC' },
+];
+
+const MISSION_PROGRESS_KEY = 'lm_missions';
+const MISSION_DATE_KEY = 'lm_mission_date';
+
+function getMissionProgress() {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem(MISSION_DATE_KEY);
+  if (savedDate !== today) {
+    localStorage.setItem(MISSION_DATE_KEY, today);
+    localStorage.removeItem(MISSION_PROGRESS_KEY);
+    return {};
+  }
+  try { return JSON.parse(localStorage.getItem(MISSION_PROGRESS_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function saveMissionProgress(p) {
+  localStorage.setItem(MISSION_PROGRESS_KEY, JSON.stringify(p));
+}
+
+function updateMissionProgress(id, delta) {
+  const p = getMissionProgress();
+  const mission = MISSIONS.find(m => m.id === id);
+  if (!mission) return;
+  if (p[id + '_done']) return;
+  p[id] = Math.min((p[id]||0) + delta, mission.goal);
+  if (p[id] >= mission.goal && !p[id + '_done']) {
+    p[id + '_done'] = true;
+    // Grant reward
+    if (id === 'spin') { gc += 5000; sc = parseFloat((sc+0.05).toFixed(2)); }
+    if (id === 'scratch') { gc += 3000; sc = parseFloat((sc+0.03).toFixed(2)); }
+    if (id === 'win') { gc += 10000; sc = parseFloat((sc+0.10).toFixed(2)); }
+    updateDisplays();
+    toast(`✅ Mission complete! ${mission.reward} earned!`);
+  }
+  saveMissionProgress(p);
+  buildMissions();
+}
+
+function buildMissions() {
+  const p = getMissionProgress();
+  const grid = document.getElementById('missionsGrid');
+  if (!grid) return;
+  grid.innerHTML = MISSIONS.map(m => {
+    const cur = p[m.id] || 0;
+    const done = !!p[m.id+'_done'];
+    const pct = Math.min(100, (cur / m.goal) * 100);
+    return `<div class="mission-card ${done?'done':''}">
+      <div class="mission-icon">${m.icon}</div>
+      <div class="mission-label">${m.label}</div>
+      <div class="mission-progress-bar"><div class="mission-progress-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">${cur}/${m.goal}</div>
+      <div class="mission-reward">${done ? '✅ Claimed' : m.reward}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── BUY PACKAGE ───────────────────────────────────────────
+function buyPackage(price, coins, bonusSc) {
+  pendingPkg = { price, coins, bonusSc };
+  document.getElementById('buyModalSub').textContent = `${coins.toLocaleString()} GC + ${bonusSc} SC — $${price.toFixed(2)}`;
+  updatePayInstructions();
+  closeModal('coinsModal');
+  document.getElementById('buyModal').classList.add('open');
+}
+
+function selectPayOpt(el, method) {
+  document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPay = method;
+  updatePayInstructions();
+}
+
+function updatePayInstructions() {
+  const el = document.getElementById('payInstructions');
+  if (!el || !pendingPkg) return;
+  const total = pendingPkg.price.toFixed(2);
+  if (selectedPay === 'cashapp') {
+    el.innerHTML = `💚 Send <strong style="color:var(--green);">$${total}</strong> to <strong style="color:var(--green);">" + CASHAPP_HANDLE + "</strong> on Cash App<br><span style="font-size:11px;color:var(--text3);">Include "Lucky Maze coins" in the note</span>`;
+  } else {
+    el.innerHTML = `💙 Send <strong style="color:#60a5fa;">$${total}</strong> to <strong style="color:#60a5fa;">" + PAYPAL_HANDLE + "</strong> on PayPal<br><span style="font-size:11px;color:var(--text3);">Friends & Family — include "Lucky Maze coins" in the note</span>`;
+  }
+}
+
+function confirmBuyPackage() {
+  if (!pendingPkg) return;
+  const url = selectedPay === 'cashapp'
+    ? `https://cash.app/${CASHAPP_HANDLE}/${pendingPkg.price.toFixed(2)}?note=${encodeURIComponent('Lucky Maze Coins')}`
+    : `https://paypal.me/${PAYPAL_HANDLE.includes('@') ? PAYPAL_HANDLE.split('@')[0] : PAYPAL_HANDLE}/${pendingPkg.price.toFixed(2)}USD`;
+  window.open(url, '_blank');
+  closeModal('buyModal');
+  toast('✅ Payment opened! Coins will be added after confirmation.');
+}
+
+// ── REDEEM ─────────────────────────────────────────────────
+function submitRedeem() {
+  const amount = parseFloat(document.getElementById('redeemAmount').value);
+  const handle = document.getElementById('redeemHandle').value.trim();
+  if (!amount || amount < 100) { toast('Minimum 100 SC to redeem.'); return; }
+  if (amount > sc) { toast('Not enough SC.'); return; }
+  if (!handle) { toast('Enter your Cash App or PayPal.'); return; }
+  toast(`✅ Redemption request submitted! $${amount.toFixed(2)} will be sent to ${handle} within 24–48 hrs.`);
+  closeModal('redeemModal');
+}
+
+// ── WIN OVERLAY ────────────────────────────────────────────
+function showWin(title, amount) {
+  document.getElementById('winAmount').textContent = amount;
+  document.querySelector('.win-title').textContent = title;
+  document.getElementById('winOverlay').classList.add('open');
+}
+
+function closeWin() {
+  document.getElementById('winOverlay').classList.remove('open');
+}
+
+// ── CONFETTI ───────────────────────────────────────────────
+function spawnConfetti() {
+  const colors = ['var(--gold)','var(--purple3)','#fff','#ff6b9d','#00ff9d'];
+  for (let i=0; i<60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${Math.random()*100}vw;
+      top: -10px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${1.5 + Math.random()*2}s;
+      animation-delay: ${Math.random()*0.8}s;
+      transform: rotate(${Math.random()*360}deg);
+      width: ${4+Math.random()*8}px;
+      height: ${4+Math.random()*8}px;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+// ── PAYMENT HANDLES (from Netlify env via /api/config) ──────
+let CASHAPP_HANDLE = '$7707438091';
+let PAYPAL_HANDLE  = 'willie.mayes@gmail.com';
+
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/config');
+    if (res.ok) {
+      const cfg = await res.json();
+      if (cfg.cashapp) CASHAPP_HANDLE = cfg.cashapp;
+      if (cfg.paypal)  PAYPAL_HANDLE  = cfg.paypal;
+    }
+  } catch(e) { /* use defaults */ }
+}
+
+// ── INIT ───────────────────────────────────────────────────
+(async () => {
+  await loadConfig();
+  checkDailyBonus();
+  updateDisplays();
+  updatePayInstructions();
+  buildMissions();
+  initReels();
+})();
+
+// Click outside modal to close
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+// Escape key to close any open modal
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+</script>
+</body>
+</html>
