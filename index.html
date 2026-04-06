@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Lucky Maze — Spin. Scratch. Win.</title>
+<title>Lucky Maze â Spin. Scratch. Win.</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lucky Maze">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="description" content="Free social casino â slots, scratch cards, daily bonuses. Spin to win!">
+<meta property="og:title" content="Lucky Maze â Spin. Scratch. Win.">
+<meta property="og:description" content="Free social casino games. No download required â play instantly!">
+<meta property="og:image" content="/icon-512.png">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -43,7 +53,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── BACKGROUND EFFECTS ─────────────────────────────── */
+/* ââ BACKGROUND EFFECTS âââââââââââââââââââââââââââââââ */
 body::before {
   content: '';
   position: fixed;
@@ -69,7 +79,7 @@ body::after {
   z-index: 0;
 }
 
-/* ── HEADER ─────────────────────────────────────────── */
+/* ââ HEADER âââââââââââââââââââââââââââââââââââââââââââ */
 .header {
   position: sticky;
   top: 0;
@@ -191,7 +201,7 @@ body::after {
 }
 .get-coins-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px var(--gold-glow); }
 
-/* ── NAV TABS ─────────────────────────────────────────── */
+/* ââ NAV TABS âââââââââââââââââââââââââââââââââââââââââââ */
 .nav-tabs {
   display: flex;
   gap: 4px;
@@ -224,7 +234,7 @@ body::after {
   box-shadow: 0 0 16px rgba(124,58,237,0.4);
 }
 
-/* ── MAIN CONTENT ─────────────────────────────────────── */
+/* ââ MAIN CONTENT âââââââââââââââââââââââââââââââââââââââ */
 .main {
   padding: 0 20px 80px;
   position: relative;
@@ -233,7 +243,7 @@ body::after {
   margin: 0 auto;
 }
 
-/* ── HERO BANNER ─────────────────────────────────────── */
+/* ââ HERO BANNER âââââââââââââââââââââââââââââââââââââââ */
 .hero {
   background: linear-gradient(135deg, #1a0e35 0%, #2d1a50 50%, #1a1428 100%);
   border: 1px solid var(--border2);
@@ -328,7 +338,7 @@ body::after {
   line-height: 1.1;
 }
 
-/* ── SLOT MACHINE ─────────────────────────────────────── */
+/* ââ SLOT MACHINE âââââââââââââââââââââââââââââââââââââââ */
 .section-title {
   font-family: 'Cinzel', serif;
   font-size: 16px;
@@ -403,7 +413,7 @@ body::after {
 .bet-btn:hover { border-color: var(--gold); color: var(--gold); }
 .bet-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
-/* ── SLOT MACHINE — LAVISH LUCK STYLE ───────────────── */
+/* ââ SLOT MACHINE â LAVISH LUCK STYLE âââââââââââââââââ */
 .slot-reels {
   display: flex;
   gap: 6px;
@@ -412,7 +422,7 @@ body::after {
   padding: 0 4px;
 }
 
-/* Outer frame — the machine body */
+/* Outer frame â the machine body */
 .reels-frame {
   position: relative;
   background: #060410;
@@ -425,7 +435,7 @@ body::after {
     0 0 30px rgba(124,58,237,0.2);
 }
 
-/* Gradient overlays top/bottom — dim the outer rows */
+/* Gradient overlays top/bottom â dim the outer rows */
 .reels-frame::before,
 .reels-frame::after {
   content: '';
@@ -481,7 +491,7 @@ body::after {
 
 .reel-container {
   flex: 1;
-  height: 270px; /* 3 rows × 90px */
+  height: 270px; /* 3 rows Ã 90px */
   overflow: hidden;
   position: relative;
   background: transparent;
@@ -583,7 +593,7 @@ body::after {
   transition: all 0.3s;
 }
 
-/* ── SCRATCH CARDS ────────────────────────────────────── */
+/* ââ SCRATCH CARDS ââââââââââââââââââââââââââââââââââââââ */
 .scratch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -674,7 +684,7 @@ canvas.scratch {
 }
 .scratch-play-btn:hover { background: rgba(245,200,66,0.25); }
 
-/* ── DAILY BONUS ──────────────────────────────────────── */
+/* ââ DAILY BONUS ââââââââââââââââââââââââââââââââââââââââ */
 .daily-bonus-card {
   background: linear-gradient(135deg, #1a1428, #2d1a50);
   border: 1px solid var(--border2);
@@ -713,7 +723,7 @@ canvas.scratch {
 .daily-claim-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px var(--gold-glow); }
 .daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; background: #555; color: #aaa; }
 
-/* ── GET COINS MODAL ─────────────────────────────────── */
+/* ââ GET COINS MODAL âââââââââââââââââââââââââââââââââââ */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -870,7 +880,7 @@ canvas.scratch {
 }
 .buy-btn:hover { box-shadow: 0 4px 20px var(--gold-glow); transform: translateY(-1px); }
 
-/* ── REDEEM MODAL ─────────────────────────────────────── */
+/* ââ REDEEM MODAL âââââââââââââââââââââââââââââââââââââââ */
 .redeem-form { display: flex; flex-direction: column; gap: 12px; }
 .form-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .form-input {
@@ -899,7 +909,7 @@ canvas.scratch {
 }
 .redeem-btn:hover { box-shadow: 0 4px 20px rgba(124,58,237,0.5); }
 
-/* ── WIN CELEBRATION ─────────────────────────────────── */
+/* ââ WIN CELEBRATION âââââââââââââââââââââââââââââââââââ */
 .win-overlay {
   display: none;
   position: fixed;
@@ -966,7 +976,7 @@ canvas.scratch {
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
-/* ── SC INFO ─────────────────────────────────────────── */
+/* ââ SC INFO âââââââââââââââââââââââââââââââââââââââââââ */
 .sc-info-row {
   background: var(--purple-dim);
   border: 1px solid rgba(124,58,237,0.25);
@@ -990,7 +1000,7 @@ canvas.scratch {
 }
 .redeem-sc-btn:hover { box-shadow: 0 4px 16px rgba(124,58,237,0.5); }
 
-/* ── BOTTOM NAV (mobile) ─────────────────────────────── */
+/* ââ BOTTOM NAV (mobile) âââââââââââââââââââââââââââââââ */
 @media (max-width: 600px) {
   .header { padding: 0 12px; height: 56px; }
   .logo { font-size: 16px; }
@@ -1004,7 +1014,7 @@ canvas.scratch {
   .scratch-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── TOAST ───────────────────────────────────────────── */
+/* ââ TOAST âââââââââââââââââââââââââââââââââââââââââââââ */
 #toast {
   position: fixed;
   bottom: 24px;
@@ -1024,7 +1034,7 @@ canvas.scratch {
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ── MISSIONS BAR ─────────────────────────────────────── */
+/* ââ MISSIONS BAR âââââââââââââââââââââââââââââââââââââââ */
 .missions-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1059,35 +1069,374 @@ canvas.scratch {
   transition: width 0.5s ease;
 }
 .mission-reward { font-size: 10px; color: var(--gold); font-weight: 700; }
+
+/* ââ LEADERBOARD âââââââââââââââââââââââââââââââââââââââ */
+.leaderboard-wrap { padding: 16px; max-width: 480px; margin: 0 auto; }
+.lb-header { text-align: center; margin-bottom: 20px; }
+.lb-title { font-family: 'Cinzel Decorative', serif; font-size: 20px; color: var(--gold); }
+.lb-subtitle { font-size: 12px; color: var(--text3); margin-top: 4px; }
+.lb-name-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.lb-name-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text); font-size: 14px; outline: none; }
+.lb-name-input:focus { border-color: var(--gold); }
+.lb-save-btn { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #111; border: none; border-radius: 10px; padding: 10px 16px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.lb-list { display: flex; flex-direction: column; gap: 8px; }
+.lb-entry { display: flex; align-items: center; gap: 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
+.lb-rank { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+.lb-info { flex: 1; }
+.lb-player { font-weight: 700; color: var(--text); font-size: 14px; }
+.lb-score { font-size: 12px; color: var(--text3); }
+.lb-gc { font-weight: 700; color: var(--gold); font-size: 15px; }
+.lb-entry.me { border-color: var(--gold); background: var(--gold-dim); }
+.lb-loading { text-align: center; padding: 40px; color: var(--text3); }
+.lb-empty { text-align: center; padding: 40px; color: var(--text3); font-size: 14px; }
+
+/* ââ COIN FLIP ââââââââââââââââââââââââââââââââââââââââ */
+.coinflip-wrap { padding: 20px 16px; max-width: 420px; margin: 0 auto; text-align: center; }
+.coin-container { position: relative; width: 160px; height: 160px; margin: 24px auto; perspective: 800px; }
+.coin { width: 160px; height: 160px; position: relative; transform-style: preserve-3d; transition: transform 0.1s; cursor: pointer; }
+.coin-face { position: absolute; inset: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 64px; backface-visibility: hidden; box-shadow: 0 8px 32px rgba(245,200,66,0.3); }
+.coin-heads { background: radial-gradient(circle at 35% 35%, #ffe566, #f5c842, #c8960c); }
+.coin-tails { background: radial-gradient(circle at 35% 35%, #b87eff, #7c3aed, #4c1d95); transform: rotateY(180deg); }
+.coin.flipping { animation: coinSpin 1.5s ease-in-out; }
+@keyframes coinSpin {
+  0%   { transform: rotateY(0); }
+  40%  { transform: rotateY(1440deg); }
+  70%  { transform: rotateY(1620deg); }
+  85%  { transform: rotateY(1710deg); }
+  100% { transform: rotateY(1800deg); }
+}
+.cf-choose { display: flex; gap: 12px; justify-content: center; margin: 16px 0; }
+.cf-btn { flex: 1; padding: 14px; border-radius: 14px; border: 2px solid; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; max-width: 160px; }
+.cf-heads { background: rgba(245,200,66,0.1); border-color: var(--gold); color: var(--gold); }
+.cf-tails { background: rgba(124,58,237,0.1); border-color: var(--purple); color: var(--purple3); }
+.cf-btn.selected { transform: scale(1.05); }
+.cf-heads.selected { background: rgba(245,200,66,0.25); }
+.cf-tails.selected { background: rgba(124,58,237,0.25); }
+.cf-bet-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+.cf-bet-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface2); color: var(--text2); font-size: 13px; font-weight: 600; cursor: pointer; }
+.cf-bet-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+.cf-flip-btn { width: 100%; padding: 16px; border-radius: 14px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #111; border: none; font-weight: 900; font-size: 16px; cursor: pointer; margin-top: 8px; letter-spacing: 1px; }
+.cf-flip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cf-result { font-size: 22px; font-weight: 800; margin: 12px 0; min-height: 32px; }
+.cf-result.win { color: var(--gold); }
+.cf-result.lose { color: var(--red); }
+.cf-stats { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+.cf-stat { text-align: center; }
+.cf-stat-val { font-size: 20px; font-weight: 800; color: var(--gold); }
+.cf-stat-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ââ LEADERBOARD ââââââââââââââââââââââââââââââââââââââââ */
+/* ââ PWA INSTALL BANNER âââââââââââââââââââââââââââââââ */
+#installBanner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #1a1428, #2d1b69);
+  border-top: 1px solid #7c3aed;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 -4px 24px rgba(124,58,237,0.4);
+  animation: slideUp 0.4s ease;
+}
+#installBanner.show { display: flex; }
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.install-icon { font-size: 32px; flex-shrink: 0; }
+.install-text { flex: 1; }
+.install-text strong { display: block; color: #f5c842; font-size: 14px; }
+.install-text span { font-size: 12px; color: #a89ac5; }
+.install-btn {
+  background: linear-gradient(135deg, #7c3aed, #9d5cf6);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.install-close {
+  background: none;
+  border: none;
+  color: #6b5a8a;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+/* Mute button */
+#muteBtn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: rgba(13,10,20,0.8);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s;
+}
+#muteBtn:hover { border-color: var(--gold); }
+
+/* ── ACCOUNT MODAL ───────────────────────────────────── */
+.account-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.account-modal {
+  background: linear-gradient(135deg, #1a1428, #2d1a50);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 0 60px rgba(124,58,237,0.3);
+  animation: slideUp 0.3s ease;
+}
+.account-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.account-sub {
+  font-size: 13px;
+  color: var(--text2);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.account-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: var(--surface2);
+  border-radius: 12px;
+  padding: 4px;
+}
+.account-tab {
+  flex: 1;
+  padding: 9px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.account-tab.active {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  color: white;
+}
+.account-field {
+  margin-bottom: 14px;
+}
+.account-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.account-field input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.account-field input:focus {
+  border-color: var(--purple2);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+}
+.account-submit {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), #d4a017);
+  border: none;
+  border-radius: 12px;
+  color: #1a0e00;
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 4px;
+}
+.account-submit:hover {
+  box-shadow: 0 4px 20px var(--gold-glow);
+  transform: translateY(-1px);
+}
+.account-err {
+  color: var(--red);
+  font-size: 12px;
+  text-align: center;
+  min-height: 18px;
+  margin-top: 8px;
+}
+.account-skip {
+  display: block;
+  text-align: center;
+  color: var(--text3);
+  font-size: 12px;
+  margin-top: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.account-skip:hover { color: var(--text2); }
+.account-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(124,58,237,0.2);
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 20px;
+  padding: 4px 12px 4px 4px;
+  cursor: pointer;
+}
+.account-badge-avatar {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+}
+.account-badge-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--purple3);
+}
+.account-badge-sub {
+  font-size: 10px;
+  color: var(--text3);
+}
+/* ── BUY COINS PACKAGES ─────────────────────────────── */
+.packages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.pkg-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.pkg-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245,200,66,0.15);
+}
+.pkg-card.popular {
+  border-color: var(--purple2);
+  background: var(--purple-dim);
+}
+.pkg-popular-badge {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.pkg-gc {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.pkg-sc {
+  font-size: 11px;
+  color: var(--purple3);
+  margin-bottom: 6px;
+}
+.pkg-price {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.pkg-price-sub {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
 </style>
 </head>
 <body>
+<button id="muteBtn" title="Toggle sound" onclick="var m=LMSound.toggleMute();this.textContent=m?'ð':'ð';">ð</button>
+
 
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
     Lucky Maze
-    <span>Spin · Scratch · Win</span>
+    <span>Spin Â· Scratch Â· Win</span>
   </div>
   <div class="header-right">
-    <div class="coin-display" onclick="openCoinsModal()">
-      <div class="coin-icon">🪙</div>
+    <div class="coin-display" onclick="openBuyCoins()">
+      <div class="coin-icon">ðª</div>
       <div class="coin-amount" id="gcDisplay">25,000</div>
     </div>
     <div class="sc-display">
       <div class="sc-icon">SC</div>
       <div class="sc-amount" id="scDisplay">0.30</div>
     </div>
-    <button class="get-coins-btn" onclick="openCoinsModal()">+ Get Coins</button>
+    <button class="get-coins-btn" onclick="openBuyCoins()">+ Get Coins</button>
   </div>
 </header>
 
 <!-- NAV TABS -->
 <div class="nav-tabs">
-  <button class="nav-tab active" onclick="showTab('slots', this)">🎰 Slots</button>
-  <button class="nav-tab" onclick="showTab('scratch', this)">🎟️ Scratch</button>
-  <button class="nav-tab" onclick="showTab('missions', this)">🎯 Missions</button>
-  <button class="nav-tab" onclick="openRedeemModal()">💰 Redeem SC</button>
+  <button class="nav-tab active" onclick="showTab('slots', this)">ð° Slots</button>
+  <button class="nav-tab" onclick="showTab('scratch', this)">ðï¸ Scratch</button>
+  <button class="nav-tab" onclick="showTab('missions', this)">ð¯ Missions</button>
+  <button class="nav-tab" onclick="showTab('coinflip', this)">ðª Coin Flip</button>
+  <button class="nav-tab" onclick="showTab('leaderboard', this); loadLeaderboard()">ð Leaderboard</button>
+  <button class="nav-tab" onclick="openRedeemModal()">ð° Redeem SC</button>
 </div>
 
 <!-- MAIN -->
@@ -1097,15 +1446,15 @@ canvas.scratch {
   <div class="hero">
     <div class="hero-text">
       <div class="hero-title">Welcome to<br>Lucky Maze</div>
-      <div class="hero-sub">Free to play · Real cash prizes · Daily bonuses</div>
+      <div class="hero-sub">Free to play Â· Real cash prizes Â· Daily bonuses</div>
       <div class="hero-btns">
-        <button class="hero-btn-primary" onclick="claimDaily()">🎁 Claim Daily Bonus</button>
-        <button class="hero-btn-secondary" onclick="openCoinsModal()">Get More Coins</button>
+        <button class="hero-btn-primary" onclick="claimDaily()">ð Claim Daily Bonus</button>
+        <button class="hero-btn-secondary" onclick="openBuyCoins()">Get More Coins</button>
       </div>
     </div>
     <div class="hero-prizes">
       <div class="jackpot-display">
-        <div class="jackpot-label">🏆 Jackpot Prize</div>
+        <div class="jackpot-label">ð Jackpot Prize</div>
         <div class="jackpot-amount" id="jackpotAmt">$500</div>
       </div>
     </div>
@@ -1113,10 +1462,10 @@ canvas.scratch {
 
   <!-- DAILY BONUS -->
   <div class="daily-bonus-card" id="dailyBonusCard">
-    <div style="font-size:28px;">🎁</div>
+    <div style="font-size:28px;">ð</div>
     <div class="daily-bonus-info">
       <div class="daily-bonus-title">Daily Login Bonus</div>
-      <div class="daily-bonus-sub">+20,000 Gold Coins & +0.10 SC — comes back every 24 hours</div>
+      <div class="daily-bonus-sub">+20,000 Gold Coins & +0.10 SC â comes back every 24 hours</div>
     </div>
     <button class="daily-claim-btn" id="dailyClaimBtn" onclick="claimDaily()">Claim Now</button>
   </div>
@@ -1124,19 +1473,19 @@ canvas.scratch {
   <!-- SC INFO ROW -->
   <div class="sc-info-row">
     <div class="sc-info-left">
-      You have <strong id="scInfoDisplay">0.30 SC</strong> · Min 100 SC to redeem for cash via Cash App or PayPal
+      You have <strong id="scInfoDisplay">0.30 SC</strong> Â· Min 100 SC to redeem for cash via Cash App or PayPal
     </div>
     <button class="redeem-sc-btn" onclick="openRedeemModal()">Redeem SC</button>
   </div>
 
   <!-- SLOTS TAB -->
   <div id="tab-slots">
-    <div class="section-title">🎰 Slot Machines</div>
+    <div class="section-title">ð° Slot Machines</div>
 
     <!-- SLOT MACHINE -->
     <div class="slot-machine">
       <div class="slot-top">
-        <div class="slot-game-title">🌀 Maze Spinner</div>
+        <div class="slot-game-title">ð Maze Spinner</div>
         <div class="slot-bet-row">
           <span class="bet-label">Bet</span>
           <div class="bet-btns">
@@ -1173,33 +1522,78 @@ canvas.scratch {
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:24px;">
       <div style="font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Paytable</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;">
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">💎💎💎💎💎 <span style="color:var(--gold);font-weight:700;">JACKPOT!</span></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">⭐⭐⭐⭐⭐ <span style="color:var(--gold);font-weight:700;">500× bet</span></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">🔔🔔🔔🔔🔔 <span style="color:var(--text);font-weight:700;">200× bet</span></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">5× match <span style="color:var(--text);font-weight:700;">100× bet</span></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">4× match <span style="color:var(--text);font-weight:700;">10× bet</span></div>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">3× match <span style="color:var(--text);font-weight:700;">3× bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">ððððð <span style="color:var(--gold);font-weight:700;">JACKPOT!</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">â­â­â­â­â­ <span style="color:var(--gold);font-weight:700;">500Ã bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">ððððð <span style="color:var(--text);font-weight:700;">200Ã bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">5Ã match <span style="color:var(--text);font-weight:700;">100Ã bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">4Ã match <span style="color:var(--text);font-weight:700;">10Ã bet</span></div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);">3Ã match <span style="color:var(--text);font-weight:700;">3Ã bet</span></div>
       </div>
     </div>
   </div>
 
   <!-- SCRATCH TAB -->
   <div id="tab-scratch" style="display:none;">
-    <div class="section-title">🎟️ Scratch Cards</div>
+    <div class="section-title">ðï¸ Scratch Cards</div>
     <div class="scratch-grid" id="scratchGrid"></div>
   </div>
 
   <!-- MISSIONS TAB -->
-  <div id="tab-missions" style="display:none;">
-    <div class="section-title">🎯 Daily Missions</div>
+  <div id="tab-coinflip" style="display:none;">
+  <div class="coinflip-wrap">
+    <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">ðª Coin Flip</div>
+    <div style="font-size:12px;color:var(--text3);">Pick heads or tails â win 2Ã your bet!</div>
+    <div class="coin-container">
+      <div class="coin" id="theCoin">
+        <div class="coin-face coin-heads">ð</div>
+        <div class="coin-face coin-tails">â­</div>
+      </div>
+    </div>
+    <div class="cf-choose">
+      <button class="cf-btn cf-heads" id="cfHeadsBtn" onclick="cfPick('heads')">ð HEADS</button>
+      <button class="cf-btn cf-tails" id="cfTailsBtn" onclick="cfPick('tails')">â­ TAILS</button>
+    </div>
+    <div class="cf-bet-row">
+      <button class="cf-bet-btn active" onclick="cfSetBet(100, this)">100</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(500, this)">500</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(1000, this)">1K</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(5000, this)">5K</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(10000, this)">10K</button>
+    </div>
+    <div class="cf-result" id="cfResult"></div>
+    <button class="cf-flip-btn" id="cfFlipBtn" onclick="flipCoin()" disabled>SELECT HEADS OR TAILS</button>
+    <div class="cf-stats">
+      <div class="cf-stat"><div class="cf-stat-val" id="cfWins">0</div><div class="cf-stat-lbl">Wins</div></div>
+      <div class="cf-stat"><div class="cf-stat-val" id="cfStreak">0</div><div class="cf-stat-lbl">Streak</div></div>
+      <div class="cf-stat"><div class="cf-stat-val" id="cfLosses">0</div><div class="cf-stat-lbl">Losses</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-leaderboard" style="display:none;">
+  <div class="leaderboard-wrap">
+    <div class="lb-header">
+      <div class="lb-title">ð LEADERBOARD</div>
+      <div class="lb-subtitle">Top players by Gold Coins</div>
+    </div>
+    <div class="lb-name-row">
+      <input class="lb-name-input" id="lbNameInput" placeholder="Enter your name to appear on leaderboard" maxlength="20">
+      <button class="lb-save-btn" onclick="submitScore()">Post Score</button>
+    </div>
+    <div class="lb-list" id="lbList"><div class="lb-loading">Loading leaderboard...</div></div>
+  </div>
+</div>
+
+<div id="tab-missions" style="display:none;">
+    <div class="section-title">ð¯ Daily Missions</div>
     <div class="missions-row" id="missionsGrid"></div>
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
       <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--gold);margin-bottom:6px;">How to Earn Free SC</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.7;">
-        ✦ Complete all 3 daily missions — earn free SC<br>
-        ✦ Login every day for your daily bonus<br>
-        ✦ Purchase optional Gold Coin packages to receive bonus SC<br>
-        ✦ Accumulate 100 SC minimum to redeem for real cash
+        â¦ Complete all 3 daily missions â earn free SC<br>
+        â¦ Login every day for your daily bonus<br>
+        â¦ Purchase optional Gold Coin packages to receive bonus SC<br>
+        â¦ Accumulate 100 SC minimum to redeem for real cash
       </div>
     </div>
   </div>
@@ -1209,9 +1603,9 @@ canvas.scratch {
 <!-- GET COINS MODAL -->
 <div class="modal-overlay" id="coinsModal">
   <div class="modal" style="position:relative;">
-    <button class="modal-close" onclick="closeModal('coinsModal')">✕</button>
+    <button class="modal-close" onclick="closeModal('coinsModal')">â</button>
     <div class="modal-header">
-      <div class="modal-icon">🪙</div>
+      <div class="modal-icon">ðª</div>
       <div class="modal-title">Get Coins</div>
       <div class="modal-sub">Purchase Gold Coins or claim free ones</div>
     </div>
@@ -1219,7 +1613,7 @@ canvas.scratch {
 
       <!-- Free options -->
       <div class="free-coins-section">
-        <div class="free-coins-title">🎁 Free Coins</div>
+        <div class="free-coins-title">ð Free Coins</div>
         <div class="free-option">
           <span>Daily Login Bonus</span>
           <span style="color:var(--gold);font-weight:700;font-size:12px;">20K GC + 0.10 SC</span>
@@ -1236,7 +1630,7 @@ canvas.scratch {
       <div class="coin-packages">
         <div class="coin-pkg" onclick="buyPackage(2.99, 22000, 2)">
           <div class="coin-pkg-left">
-            <div class="coin-pkg-emoji">🪙</div>
+            <div class="coin-pkg-emoji">ðª</div>
             <div class="coin-pkg-info">
               <div class="coin-pkg-coins">22,000 Gold Coins</div>
               <div class="coin-pkg-bonus">+ 2 Bonus SC</div>
@@ -1246,7 +1640,7 @@ canvas.scratch {
         </div>
         <div class="coin-pkg featured" onclick="buyPackage(9.99, 130000, 10)">
           <div class="coin-pkg-left">
-            <div class="coin-pkg-emoji">💰</div>
+            <div class="coin-pkg-emoji">ð°</div>
             <div class="coin-pkg-info">
               <div class="coin-pkg-coins">130,000 Gold Coins</div>
               <div class="coin-pkg-bonus">+ 10 Bonus SC</div>
@@ -1257,7 +1651,7 @@ canvas.scratch {
         </div>
         <div class="coin-pkg" onclick="buyPackage(19.99, 300000, 25)">
           <div class="coin-pkg-left">
-            <div class="coin-pkg-emoji">💎</div>
+            <div class="coin-pkg-emoji">ð</div>
             <div class="coin-pkg-info">
               <div class="coin-pkg-coins">300,000 Gold Coins</div>
               <div class="coin-pkg-bonus">+ 25 Bonus SC</div>
@@ -1267,7 +1661,7 @@ canvas.scratch {
         </div>
         <div class="coin-pkg" onclick="buyPackage(49.99, 850000, 50)">
           <div class="coin-pkg-left">
-            <div class="coin-pkg-emoji">🏆</div>
+            <div class="coin-pkg-emoji">ð</div>
             <div class="coin-pkg-info">
               <div class="coin-pkg-coins">850,000 Gold Coins</div>
               <div class="coin-pkg-bonus">+ 50 Bonus SC</div>
@@ -1288,22 +1682,22 @@ canvas.scratch {
 <!-- BUY PACKAGE MODAL -->
 <div class="modal-overlay" id="buyModal">
   <div class="modal" style="position:relative;">
-    <button class="modal-close" onclick="closeModal('buyModal')">✕</button>
+    <button class="modal-close" onclick="closeModal('buyModal')">â</button>
     <div class="modal-header">
-      <div class="modal-icon">💳</div>
+      <div class="modal-icon">ð³</div>
       <div class="modal-title">Complete Purchase</div>
-      <div class="modal-sub" id="buyModalSub">130,000 GC + 10 SC — $9.99</div>
+      <div class="modal-sub" id="buyModalSub">130,000 GC + 10 SC â $9.99</div>
     </div>
     <div class="modal-body">
       <div style="margin-bottom:14px;">
         <div class="form-label">Pay via</div>
         <div class="pay-grid">
           <div class="pay-option selected" id="payOpt-cashapp" onclick="selectPayOpt(this,'cashapp')">
-            <div class="pay-option-icon">💚</div>
+            <div class="pay-option-icon">ð</div>
             <div class="pay-option-name">Cash App</div>
           </div>
           <div class="pay-option" id="payOpt-paypal" onclick="selectPayOpt(this,'paypal')">
-            <div class="pay-option-icon">💙</div>
+            <div class="pay-option-icon">ð</div>
             <div class="pay-option-name">PayPal</div>
           </div>
         </div>
@@ -1311,8 +1705,9 @@ canvas.scratch {
       <div id="payInstructions" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;"></div>
       <button class="buy-btn" onclick="confirmBuyPackage()">Complete Purchase</button>
       <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">
-        After payment, message Willie on Cash App/PayPal with your username to receive coins.
+        After payment, message Lucky Maze on Cash App/PayPal with your username to receive coins.
       </div>
+      <button onclick="closeModal('buyModal')" style="width:100%;margin-top:10px;padding:10px;background:transparent;border:1px solid var(--border2);border-radius:10px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;">â Cancel</button>
     </div>
   </div>
 </div>
@@ -1320,11 +1715,11 @@ canvas.scratch {
 <!-- REDEEM MODAL -->
 <div class="modal-overlay" id="redeemModal">
   <div class="modal" style="position:relative;">
-    <button class="modal-close" onclick="closeModal('redeemModal')">✕</button>
+    <button class="modal-close" onclick="closeModal('redeemModal')">â</button>
     <div class="modal-header">
-      <div class="modal-icon">💰</div>
+      <div class="modal-icon">ð°</div>
       <div class="modal-title">Redeem SC</div>
-      <div class="modal-sub">Min 100 SC required · Paid via Cash App or PayPal</div>
+      <div class="modal-sub">Min 100 SC required Â· Paid via Cash App or PayPal</div>
     </div>
     <div class="modal-body">
       <div style="background:var(--purple-dim);border:1px solid rgba(124,58,237,0.25);border-radius:10px;padding:12px;margin-bottom:14px;">
@@ -1342,7 +1737,7 @@ canvas.scratch {
         </div>
         <button class="redeem-btn" onclick="submitRedeem()">Request Redemption</button>
         <div style="font-size:10px;color:var(--text3);text-align:center;">
-          SC redemptions are reviewed within 24–48 hours. KYC verification required for first redemption.
+          SC redemptions are reviewed within 24â48 hours. KYC verification required for first redemption.
         </div>
       </div>
     </div>
@@ -1352,7 +1747,7 @@ canvas.scratch {
 <!-- WIN CELEBRATION -->
 <div class="win-overlay" id="winOverlay">
   <div class="win-box">
-    <div class="win-emoji">🏆</div>
+    <div class="win-emoji">ð</div>
     <div class="win-title">YOU WON!</div>
     <div class="win-amount" id="winAmount">+5,000 GC</div>
     <button class="win-close-btn" onclick="closeWin()">Collect Winnings</button>
@@ -1363,7 +1758,7 @@ canvas.scratch {
 <div id="toast"></div>
 
 <script>
-// ── STATE ────────────────────────────────────────────────
+// ââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââ
 let gc = 25000;
 let sc = 0.30;
 let currentBet = 10;
@@ -1371,7 +1766,7 @@ let spinning = false;
 let selectedPay = 'cashapp';
 let pendingPkg = null;
 
-// ── HELPERS ──────────────────────────────────────────────
+// ââ HELPERS ââââââââââââââââââââââââââââââââââââââââââââââ
 function updateDisplays() {
   document.getElementById('gcDisplay').textContent = gc.toLocaleString();
   document.getElementById('scDisplay').textContent = sc.toFixed(2);
@@ -1397,7 +1792,7 @@ function closeModal(id) {
 }
 
 function showTab(name, btn) {
-  ['slots','scratch','missions'].forEach(t => {
+  ['slots','scratch','missions','coinflip','leaderboard'].forEach(t => {
     document.getElementById('tab-'+t).style.display = t===name ? '' : 'none';
   });
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
@@ -1412,7 +1807,7 @@ function showTab(name, btn) {
   if (name === 'missions') buildMissions();
 }
 
-// ── DAILY BONUS ───────────────────────────────────────────
+// ââ DAILY BONUS âââââââââââââââââââââââââââââââââââââââââââ
 const DAILY_KEY = 'lm_daily_claimed';
 function checkDailyBonus() {
   const last = localStorage.getItem(DAILY_KEY);
@@ -1438,13 +1833,13 @@ function claimDaily() {
   updateDisplays();
   const btn = document.getElementById('dailyClaimBtn');
   btn.disabled = true;
-  btn.textContent = 'Claimed! ✓';
+  btn.textContent = 'Claimed! â';
   checkDailyBonus();
-  showWin('🎁 Daily Bonus!', '+20,000 GC & +0.10 SC');
+  showWin('ð Daily Bonus!', '+20,000 GC & +0.10 SC');
 }
 
-// ── SLOT MACHINE ──────────────────────────────────────────
-const SYMBOLS = ['🍒','🍋','🍊','🍇','🔔','⭐','💎','🎰','🌀','💫'];
+// ââ SLOT MACHINE ââââââââââââââââââââââââââââââââââââââââââ
+const SYMBOLS = ['ð','ð','ð','ð','ð','â­','ð','ð°','ð','ð«'];
 const WEIGHTS  = [20,  18,  15,  12,  10,  8,   5,   4,   3,   5  ];
 
 // Build a full reel strip (many symbols for smooth scrolling)
@@ -1558,14 +1953,17 @@ function weightedRandom() {
 }
 
 async function spin() {
+  LMSound.spin();
+  LM_Sound.spin();
   if (spinning) return;
   if (gc < currentBet) {
     toast('Not enough Gold Coins! Get more coins first.');
-    openCoinsModal();
+    openBuyCoins();
     return;
   }
   spinning = true;
   gc -= currentBet;
+  totalSpins++;
   updateDisplays();
 
   const btn = document.getElementById('spinBtn');
@@ -1595,6 +1993,7 @@ async function spin() {
 
   // Spin reels with staggered stops
   const durations = [1200, 1500, 1800, 2100, 2400];
+  durations.forEach((d, r) => setTimeout(() => LM_Sound.reelStop(), d));
   await Promise.all(targetOffsets.map((tgt, r) => animateReelSpin(r, tgt, durations[r])));
 
   // Check wins
@@ -1606,19 +2005,19 @@ async function spin() {
   let winGC = 0, winSC = 0, winMsg = '';
 
   if (maxMatch === 5) {
-    if (matchSym === '💎') {
-      winGC = currentBet * 1000; winSC = 5; winMsg = '💎 JACKPOT!! 💎'; spawnConfetti();
-    } else if (matchSym === '⭐') {
-      winGC = currentBet * 500; winMsg = '⭐ MEGA WIN! ⭐'; spawnConfetti();
-    } else if (matchSym === '🔔') {
-      winGC = currentBet * 200; winMsg = '🔔 BIG WIN! 🔔';
+    if (matchSym === 'ð') {
+      winGC = currentBet * 1000; winSC = 5; winMsg = 'ð JACKPOT!! ð'; spawnConfetti(); LM_Sound.jackpot();
+    } else if (matchSym === 'â­') {
+      winGC = currentBet * 500; winMsg = 'â­ MEGA WIN! â­'; spawnConfetti(); LM_Sound.bigWin();
+    } else if (matchSym === 'ð') {
+      winGC = currentBet * 200; winMsg = 'ð BIG WIN! ð'; LM_Sound.bigWin();
     } else {
-      winGC = currentBet * 100; winMsg = `${matchSym}${matchSym}${matchSym} 5 OF A KIND!`;
+      winGC = currentBet * 100; winMsg = `${matchSym}${matchSym}${matchSym} 5 OF A KIND!`; LM_Sound.mediumWin();
     }
   } else if (maxMatch === 4) {
-    winGC = currentBet * 10; winMsg = `4× ${matchSym} — Big Win!`;
+    winGC = currentBet * 10; winMsg = `4Ã ${matchSym} â Big Win!`; LM_Sound.mediumWin();
   } else if (maxMatch === 3) {
-    winGC = currentBet * 3; winMsg = `3× ${matchSym} — You Win!`;
+    winGC = currentBet * 3; winMsg = `3Ã ${matchSym} â You Win!`; LM_Sound.smallWin();
   }
 
   if (winGC > 0) {
@@ -1634,9 +2033,11 @@ async function spin() {
       }
     });
     if (maxMatch >= 4) showWin(winMsg, `+${winGC.toLocaleString()} GC${winSC>0?' & +'+winSC+' SC':''}`);
+    totalWins++;
     updateMissionProgress('win', 1);
   } else {
-    document.getElementById('slotWinMsg').textContent = 'No match — spin again!';
+    LM_Sound.lose();
+    document.getElementById('slotWinMsg').textContent = 'No match â spin again!';
     document.getElementById('slotWinMsg').style.color = 'var(--text3)';
   }
 
@@ -1653,12 +2054,12 @@ function setBet(amount, btn) {
   document.getElementById('spinCost').textContent = `Cost: ${amount.toLocaleString()} GC per spin`;
 }
 
-// ── SCRATCH CARDS ─────────────────────────────────────────
+// ââ SCRATCH CARDS âââââââââââââââââââââââââââââââââââââââââ
 const SCRATCH_CARDS_DEF = [
-  { name: 'GOLD RUSH', cost: 500, theme: ['var(--gold)','#7a5900'], prizes: [0,0,0,0,500,1000,2000,5000], emoji: '🥇' },
-  { name: 'LUCKY 7s', cost: 1000, theme: ['var(--purple3)','#3b1d8a'], prizes: [0,0,0,1000,2000,5000,10000,25000], emoji: '7️⃣' },
-  { name: 'DIAMOND HUNT', cost: 2500, theme: ['#7af3ff','#0a4a5c'], prizes: [0,0,2500,5000,10000,25000,50000,100000], emoji: '💎' },
-  { name: 'MAZE MYSTERY', cost: 5000, theme: ['var(--green)','#0a3a1a'], prizes: [0,0,0,5000,10000,25000,100000,500000], emoji: '🌀' },
+  { name: 'GOLD RUSH', cost: 500, theme: ['var(--gold)','#7a5900'], prizes: [0,0,0,0,500,1000,2000,5000], emoji: 'ð¥' },
+  { name: 'LUCKY 7s', cost: 1000, theme: ['var(--purple3)','#3b1d8a'], prizes: [0,0,0,1000,2000,5000,10000,25000], emoji: '7ï¸â£' },
+  { name: 'DIAMOND HUNT', cost: 2500, theme: ['#7af3ff','#0a4a5c'], prizes: [0,0,2500,5000,10000,25000,50000,100000], emoji: 'ð' },
+  { name: 'MAZE MYSTERY', cost: 5000, theme: ['var(--green)','#0a3a1a'], prizes: [0,0,0,5000,10000,25000,100000,500000], emoji: 'ð' },
 ];
 
 let scratchBuilt = false;
@@ -1674,7 +2075,7 @@ function buildScratchCards() {
       <div class="scratch-card-name" style="color:${card.theme[0]}">${card.emoji} ${card.name}</div>
       <div class="scratch-canvas-wrap" id="scratchWrap${i}">
         <div class="scratch-reveal" id="scratchReveal${i}">
-          <div class="scratch-reveal-emoji" id="scratchEmoji${i}">❓</div>
+          <div class="scratch-reveal-emoji" id="scratchEmoji${i}">â</div>
           <div class="scratch-reveal-amount" id="scratchAmt${i}" style="color:${card.theme[0]}">Scratch!</div>
         </div>
         <canvas class="scratch" id="scratchCanvas${i}" width="160" height="100"></canvas>
@@ -1754,16 +2155,17 @@ function initScratchCanvas(idx, card) {
 }
 
 function playScratch(idx) {
+  LM_Sound.click();
   const card = SCRATCH_CARDS_DEF[idx];
-  if (gc < card.cost) { toast('Not enough coins!'); openCoinsModal(); return; }
+  if (gc < card.cost) { toast('Not enough coins!'); openBuyCoins(); return; }
   gc -= card.cost;
   updateDisplays();
   // Reset reveal
-  document.getElementById('scratchEmoji' + idx).textContent = '❓';
+  document.getElementById('scratchEmoji' + idx).textContent = 'â';
   document.getElementById('scratchAmt' + idx).textContent = 'Scratch!';
   initScratchCanvas(idx, card);
   updateMissionProgress('scratch', 1);
-  toast(`New ${card.name} card ready — scratch to reveal!`);
+  toast(`New ${card.name} card ready â scratch to reveal!`);
 }
 
 function revealScratch(idx, prize, card) {
@@ -1772,24 +2174,24 @@ function revealScratch(idx, prize, card) {
   if (prize > 0) {
     gc += prize;
     updateDisplays();
-    emojiEl.textContent = '🏆';
+    emojiEl.textContent = 'ð';
     amtEl.textContent = '+' + prize.toLocaleString() + ' GC';
     amtEl.style.color = 'var(--gold)';
-    if (prize >= 10000) showWin('🎟️ Scratch Winner!', '+' + prize.toLocaleString() + ' GC');
-    else toast(`🎉 You won ${prize.toLocaleString()} GC!`);
+    if (prize >= 10000) showWin('ðï¸ Scratch Winner!', '+' + prize.toLocaleString() + ' GC');
+    else toast(`ð You won ${prize.toLocaleString()} GC!`);
     updateMissionProgress('win', 1);
   } else {
-    emojiEl.textContent = '😔';
+    emojiEl.textContent = 'ð';
     amtEl.textContent = 'No win';
     amtEl.style.color = 'var(--text3)';
   }
 }
 
-// ── MISSIONS ──────────────────────────────────────────────
+// ââ MISSIONS ââââââââââââââââââââââââââââââââââââââââââââââ
 const MISSIONS = [
-  { id: 'spin', icon: '🎰', label: 'Spin 10x', goal: 10, reward: '5,000 GC + 0.05 SC' },
-  { id: 'scratch', icon: '🎟️', label: 'Scratch 3 cards', goal: 3, reward: '3,000 GC + 0.03 SC' },
-  { id: 'win', icon: '🏆', label: 'Win 5 times', goal: 5, reward: '10,000 GC + 0.10 SC' },
+  { id: 'spin', icon: 'ð°', label: 'Spin 10x', goal: 10, reward: '5,000 GC + 0.05 SC' },
+  { id: 'scratch', icon: 'ðï¸', label: 'Scratch 3 cards', goal: 3, reward: '3,000 GC + 0.03 SC' },
+  { id: 'win', icon: 'ð', label: 'Win 5 times', goal: 5, reward: '10,000 GC + 0.10 SC' },
 ];
 
 const MISSION_PROGRESS_KEY = 'lm_missions';
@@ -1823,7 +2225,7 @@ function updateMissionProgress(id, delta) {
     if (id === 'scratch') { gc += 3000; sc = parseFloat((sc+0.03).toFixed(2)); }
     if (id === 'win') { gc += 10000; sc = parseFloat((sc+0.10).toFixed(2)); }
     updateDisplays();
-    toast(`✅ Mission complete! ${mission.reward} earned!`);
+    toast(`â Mission complete! ${mission.reward} earned!`);
   }
   saveMissionProgress(p);
   buildMissions();
@@ -1842,15 +2244,15 @@ function buildMissions() {
       <div class="mission-label">${m.label}</div>
       <div class="mission-progress-bar"><div class="mission-progress-fill" style="width:${pct}%"></div></div>
       <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">${cur}/${m.goal}</div>
-      <div class="mission-reward">${done ? '✅ Claimed' : m.reward}</div>
+      <div class="mission-reward">${done ? 'â Claimed' : m.reward}</div>
     </div>`;
   }).join('');
 }
 
-// ── BUY PACKAGE ───────────────────────────────────────────
+// ââ BUY PACKAGE âââââââââââââââââââââââââââââââââââââââââââ
 function buyPackage(price, coins, bonusSc) {
   pendingPkg = { price, coins, bonusSc };
-  document.getElementById('buyModalSub').textContent = `${coins.toLocaleString()} GC + ${bonusSc} SC — $${price.toFixed(2)}`;
+  document.getElementById('buyModalSub').textContent = `${coins.toLocaleString()} GC + ${bonusSc} SC â $${price.toFixed(2)}`;
   updatePayInstructions();
   closeModal('coinsModal');
   document.getElementById('buyModal').classList.add('open');
@@ -1868,35 +2270,94 @@ function updatePayInstructions() {
   if (!el || !pendingPkg) return;
   const total = pendingPkg.price.toFixed(2);
   if (selectedPay === 'cashapp') {
-    el.innerHTML = `💚 Send <strong style="color:var(--green);">$${total}</strong> to <strong style="color:var(--green);">" + CASHAPP_HANDLE + "</strong> on Cash App<br><span style="font-size:11px;color:var(--text3);">Include "Lucky Maze coins" in the note</span>`;
+    el.innerHTML = `ð Send <strong style="color:var(--green);">$${total}</strong> to <strong style="color:var(--green);">Lucky Maze</strong> on Cash App<br><span style="font-size:11px;color:var(--text3);">Include "Lucky Maze" in the note</span>`;
   } else {
-    el.innerHTML = `💙 Send <strong style="color:#60a5fa;">$${total}</strong> to <strong style="color:#60a5fa;">" + PAYPAL_HANDLE + "</strong> on PayPal<br><span style="font-size:11px;color:var(--text3);">Friends & Family — include "Lucky Maze coins" in the note</span>`;
+    el.innerHTML = `ð Send <strong style="color:#60a5fa;">$${total}</strong> to <strong style="color:#60a5fa;">Lucky Maze</strong> on PayPal<br><span style="font-size:11px;color:var(--text3);">Friends & Family â include "Lucky Maze" in the note</span>`;
   }
 }
 
-function confirmBuyPackage() {
+async function confirmBuyPackage() {
   if (!pendingPkg) return;
+
+  // Get or create player ID
+  let playerId = localStorage.getItem('lm_player_id');
+  if (!playerId) {
+    playerId = 'P' + Date.now() + Math.random().toString(36).slice(2,6).toUpperCase();
+    localStorage.setItem('lm_player_id', playerId);
+  }
+  const playerName = localStorage.getItem('lm_player_name') || 'Player';
+
+  // Submit pending purchase to server
+  try {
+    await fetch('/api/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerId,
+        playerName,
+        price: pendingPkg.price,
+        coins: pendingPkg.coins,
+        bonusSc: pendingPkg.bonusSc,
+        method: selectedPay,
+        status: 'pending',
+        ts: Date.now()
+      })
+    });
+  } catch(e) {}
+
+  // Open payment app
   const url = selectedPay === 'cashapp'
-    ? `https://cash.app/${CASHAPP_HANDLE}/${pendingPkg.price.toFixed(2)}?note=${encodeURIComponent('Lucky Maze Coins')}`
+    ? `https://cash.app/${CASHAPP_HANDLE}/${pendingPkg.price.toFixed(2)}?note=${encodeURIComponent('Lucky Maze - ' + playerId)}`
     : `https://paypal.me/${PAYPAL_HANDLE.includes('@') ? PAYPAL_HANDLE.split('@')[0] : PAYPAL_HANDLE}/${pendingPkg.price.toFixed(2)}USD`;
   window.open(url, '_blank');
   closeModal('buyModal');
-  toast('✅ Payment opened! Coins will be added after confirmation.');
+
+  // Show confirmation with player ID
+  toast(`â Payment opened! Your ID: ${playerId} â coins added after confirmation.`);
+  LM_Sound.purchase();
+
+  // Store pending purchase locally too
+  const pending = JSON.parse(localStorage.getItem('lm_pending_purchases') || '[]');
+  pending.push({ playerId, price: pendingPkg.price, coins: pendingPkg.coins, bonusSc: pendingPkg.bonusSc, method: selectedPay, ts: Date.now() });
+  localStorage.setItem('lm_pending_purchases', JSON.stringify(pending));
 }
 
-// ── REDEEM ─────────────────────────────────────────────────
-function submitRedeem() {
+// ââ REDEEM âââââââââââââââââââââââââââââââââââââââââââââââââ
+async function submitRedeem() {
   const amount = parseFloat(document.getElementById('redeemAmount').value);
   const handle = document.getElementById('redeemHandle').value.trim();
   if (!amount || amount < 100) { toast('Minimum 100 SC to redeem.'); return; }
   if (amount > sc) { toast('Not enough SC.'); return; }
   if (!handle) { toast('Enter your Cash App or PayPal.'); return; }
-  toast(`✅ Redemption request submitted! $${amount.toFixed(2)} will be sent to ${handle} within 24–48 hrs.`);
-  closeModal('redeemModal');
+
+  const playerId = localStorage.getItem('lm_player_id') || 'unknown';
+  const playerName = localStorage.getItem('lm_player_name') || 'Player';
+
+  try {
+    await fetch('/api/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'redeem',
+        playerId, playerName,
+        amount, handle,
+        status: 'pending',
+        ts: Date.now()
+      })
+    });
+    sc -= amount;
+    updateDisplays();
+    toast(`â Redemption request submitted! $${amount.toFixed(2)} â ${handle} within 24â48 hrs.`);
+    closeModal('redeemModal');
+  } catch(e) {
+    toast('â Request submitted! We will process within 24â48 hrs.');
+    closeModal('redeemModal');
+  }
 }
 
-// ── WIN OVERLAY ────────────────────────────────────────────
+// ââ WIN OVERLAY ââââââââââââââââââââââââââââââââââââââââââââ
 function showWin(title, amount) {
+  LM_Sound.coin();
   document.getElementById('winAmount').textContent = amount;
   document.querySelector('.win-title').textContent = title;
   document.getElementById('winOverlay').classList.add('open');
@@ -1906,7 +2367,7 @@ function closeWin() {
   document.getElementById('winOverlay').classList.remove('open');
 }
 
-// ── CONFETTI ───────────────────────────────────────────────
+// ââ CONFETTI âââââââââââââââââââââââââââââââââââââââââââââââ
 function spawnConfetti() {
   const colors = ['var(--gold)','var(--purple3)','#fff','#ff6b9d','#00ff9d'];
   for (let i=0; i<60; i++) {
@@ -1927,7 +2388,7 @@ function spawnConfetti() {
   }
 }
 
-// ── PAYMENT HANDLES (from Netlify env via /api/config) ──────
+// ââ PAYMENT HANDLES (from Netlify env via /api/config) ââââââ
 let CASHAPP_HANDLE = '$7707438091';
 let PAYPAL_HANDLE  = 'willie.mayes@gmail.com';
 
@@ -1942,7 +2403,7 @@ async function loadConfig() {
   } catch(e) { /* use defaults */ }
 }
 
-// ── INIT ───────────────────────────────────────────────────
+// ââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââââ
 (async () => {
   await loadConfig();
   checkDailyBonus();
@@ -1966,5 +2427,600 @@ document.addEventListener('keydown', function(e) {
   }
 });
 </script>
+
+<!-- Account Modal -->
+<div id="accountModal" class="account-modal-overlay" style="display:none;">
+  <div class="account-modal">
+    <div class="account-title">ð° Lucky Maze</div>
+    <div class="account-sub">Create an account to save your coins across devices</div>
+    <div class="account-tabs">
+      <button class="account-tab active" id="regTab" onclick="switchAccountTab('register')">Create Account</button>
+      <button class="account-tab" id="loginTab" onclick="switchAccountTab('login')">Sign In</button>
+    </div>
+    <div id="accountForm">
+      <div class="account-field">
+        <label>Username</label>
+        <input id="accUsername" placeholder="Choose a username" maxlength="20" autocomplete="off">
+      </div>
+      <div class="account-field">
+        <label>4-digit PIN</label>
+        <input id="accPin" type="password" inputmode="numeric" placeholder="Choose a PIN" maxlength="6" autocomplete="off">
+      </div>
+      <button class="account-submit" onclick="submitAccount()">ð° Create Account</button>
+      <div class="account-err" id="accountErr"></div>
+      <a class="account-skip" onclick="skipAccount()">Skip for now â play as guest</a>
+    </div>
+  </div>
+</div>
+
+<!-- Buy Coins Modal -->
+<div id="buyCoinsModal" class="account-modal-overlay" style="display:none;">
+  <div class="account-modal" style="max-width:440px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div class="account-title" style="margin:0;">ð° Get Coins</div>
+      <button onclick="closeBuyCoins()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;">â</button>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">Purchase Gold Coins â Sweep Coins included FREE!</div>
+    <div class="packages-grid">
+      <div class="pkg-card" onclick="buyPackageById('starter')">
+        <div class="pkg-gc">50,000 GC</div>
+        <div class="pkg-sc">+ 2 SC FREE</div>
+        <div class="pkg-price">$4.99</div>
+        <div class="pkg-price-sub">Starter Pack</div>
+      </div>
+      <div class="pkg-card popular" onclick="buyPackageById('popular')">
+        <div class="pkg-popular-badge">â­ MOST POPULAR</div>
+        <div class="pkg-gc">150,000 GC</div>
+        <div class="pkg-sc">+ 5 SC FREE</div>
+        <div class="pkg-price">$9.99</div>
+        <div class="pkg-price-sub">Popular Pack</div>
+      </div>
+      <div class="pkg-card" onclick="buyPackageById('value')">
+        <div class="pkg-gc">500,000 GC</div>
+        <div class="pkg-sc">+ 15 SC FREE</div>
+        <div class="pkg-price">$24.99</div>
+        <div class="pkg-price-sub">Value Pack</div>
+      </div>
+      <div class="pkg-card" onclick="buyPackageById('premium')">
+        <div class="pkg-gc">1,200,000 GC</div>
+        <div class="pkg-sc">+ 35 SC FREE</div>
+        <div class="pkg-price">$49.99</div>
+        <div class="pkg-price-sub">Premium Pack</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">Payments processed via PayPal Â· Coins credited automatically Â· GC have no cash value</div>
+  </div>
+</div>
+
+<!-- PWA Install Banner -->
+<div id="installBanner">
+  <div class="install-icon">ð°</div>
+  <div class="install-text">
+    <strong>Add Lucky Maze to your home screen!</strong>
+    <span>Play anytime, even offline. Free forever.</span>
+  </div>
+  <button class="install-btn" id="installBtn">Install App</button>
+  <button class="install-close" id="installClose">â</button>
+</div>
+
+<!-- PWA + Service Worker -->
+<script>
+
+// ââ ACCOUNT SYSTEM âââââââââââââââââââââââââââââââââââââââ
+let currentAccount = null;
+let accountTab = 'register';
+let totalSpins = 0;
+let totalWins = 0;
+
+// Load saved account on startup
+(async function initAccount() {
+  const saved = localStorage.getItem('lm_account');
+  if (saved) {
+    try {
+      const { username, pin } = JSON.parse(saved);
+      const res = await fetch(`/api/accounts/balance?username=${encodeURIComponent(username)}&pin=${encodeURIComponent(pin)}`);
+      if (res.ok) {
+        const data = await res.json();
+        currentAccount = { username, pin, ...data };
+        gc = data.gc;
+        sc = data.sc;
+        totalSpins = data.totalSpins || 0;
+        totalWins = data.totalWins || 0;
+        updateDisplays();
+        updateAccountBadge();
+        return;
+      }
+    } catch(e) {}
+  }
+  // Show account modal after 2 seconds if not logged in
+  setTimeout(function() {
+    if (!currentAccount && !localStorage.getItem('lm_guest')) {
+      document.getElementById('accountModal').style.display = 'flex';
+    }
+  }, 2000);
+})();
+
+function updateAccountBadge() {
+  if (!currentAccount) return;
+  // Update header to show account info
+  const existing = document.getElementById('accountBadge');
+  if (existing) {
+    existing.querySelector('.account-badge-name').textContent = currentAccount.username;
+    return;
+  }
+  const badge = document.createElement('div');
+  badge.id = 'accountBadge';
+  badge.className = 'account-badge';
+  badge.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:100;';
+  badge.innerHTML = `<div class="account-badge-avatar">${currentAccount.username[0].toUpperCase()}</div>
+    <div><div class="account-badge-name">${currentAccount.username}</div>
+    <div class="account-badge-sub">Tap to sync</div></div>`;
+  badge.onclick = syncAccount;
+  document.body.appendChild(badge);
+}
+
+function switchAccountTab(tab) {
+  accountTab = tab;
+  document.getElementById('regTab').classList.toggle('active', tab === 'register');
+  document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+  const btn = document.querySelector('#accountForm .account-submit');
+  btn.textContent = tab === 'register' ? 'ð° Create Account' : 'ð Sign In';
+  document.getElementById('accountErr').textContent = '';
+}
+
+async function submitAccount() {
+  const username = document.getElementById('accUsername').value.trim();
+  const pin = document.getElementById('accPin').value.trim();
+  const err = document.getElementById('accountErr');
+  err.textContent = '';
+  if (!username || username.length < 2) { err.textContent = 'Username must be at least 2 characters'; return; }
+  if (!pin || pin.length < 4) { err.textContent = 'PIN must be at least 4 digits'; return; }
+
+  const endpoint = accountTab === 'register' ? '/api/accounts/register' : '/api/accounts/login';
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, pin })
+    });
+    const data = await res.json();
+    if (!res.ok) { err.textContent = data.error || 'Error â try again'; return; }
+    currentAccount = { username, pin, ...data.account };
+    gc = data.account.gc;
+    sc = data.account.sc;
+    localStorage.setItem('lm_account', JSON.stringify({ username, pin }));
+    updateDisplays();
+    updateAccountBadge();
+    document.getElementById('accountModal').style.display = 'none';
+    LM_Sound.coin();
+    toast(accountTab === 'register' ? 'ð Account created! Your coins are saved.' : 'ð Welcome back, ' + username + '!');
+  } catch(e) {
+    err.textContent = 'Network error â try again';
+  }
+}
+
+function skipAccount() {
+  localStorage.setItem('lm_guest', '1');
+  document.getElementById('accountModal').style.display = 'none';
+  toast(`Playing as guest — coins won't sync across devices`);
+}
+
+// Sync balance to server every 5 minutes and on page close
+async function syncAccount() {
+  if (!currentAccount) return;
+  try {
+    await fetch('/api/accounts/sync', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentAccount.username, pin: currentAccount.pin, gc, sc, totalSpins, totalWins })
+    });
+    toast('â Coins synced!');
+  } catch(e) {}
+}
+setInterval(syncAccount, 5 * 60 * 1000);
+window.addEventListener('beforeunload', syncAccount);
+
+// Buy coins flow
+async function openBuyCoins() {
+  if (!currentAccount) {
+    document.getElementById('accountModal').style.display = 'flex';
+    toast('Create an account first to purchase coins!');
+    return;
+  }
+  document.getElementById('buyCoinsModal').style.display = 'flex';
+}
+
+function closeBuyCoins() {
+  document.getElementById('buyCoinsModal').style.display = 'none';
+}
+
+async function buyPackageById(packageId) {
+  if (!currentAccount) { toast('Sign in to purchase!'); return; }
+  try {
+    const res = await fetch('/api/payment/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentAccount.username, packageId })
+    });
+    const data = await res.json();
+    if (data.url) {
+      closeBuyCoins();
+      window.open(data.url, '_blank');
+      toast('Complete payment in PayPal â coins credited automatically!');
+    }
+  } catch(e) {
+    toast('Error â try again');
+  }
+}
+
+// Check for payment success on return
+(function checkPaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    window.history.replaceState({}, '', '/');
+    toast('Payment received! Coins being credited... ');
+    // Sync balance after 5 seconds to get updated coins
+    setTimeout(async function() {
+      if (currentAccount) {
+        const res = await fetch(`/api/accounts/balance?username=${encodeURIComponent(currentAccount.username)}&pin=${encodeURIComponent(currentAccount.pin)}`);
+        if (res.ok) {
+          const data = await res.json();
+          gc = data.gc; sc = data.sc;
+          updateDisplays();
+          LM_Sound.bigWin();
+          toast('ð Coins credited to your account!');
+        }
+      }
+    }, 5000);
+  }
+  if (params.get('payment') === 'cancelled') {
+    window.history.replaceState({}, '', '/');
+    toast('Payment cancelled');
+  }
+})();
+
+// ââ COIN FLIP GAME âââââââââââââââââââââââââââââââââââââââ
+let cfPick_val = null, cfBet = 100, cfWins = 0, cfLosses = 0, cfStreak = 0, cfFlipping = false;
+
+function cfPick(side) {
+  cfPick_val = side;
+  LM_Sound.click();
+  document.getElementById('cfHeadsBtn').classList.toggle('selected', side === 'heads');
+  document.getElementById('cfTailsBtn').classList.toggle('selected', side === 'tails');
+  const btn = document.getElementById('cfFlipBtn');
+  btn.disabled = false;
+  btn.textContent = 'ðª FLIP COIN!';
+}
+
+function cfSetBet(amount, el) {
+  cfBet = amount;
+  LM_Sound.click();
+  document.querySelectorAll('.cf-bet-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function flipCoin() {
+  if (!cfPick_val || cfFlipping) return;
+  if (gc < cfBet) { toast('Not enough Gold Coins!'); openBuyCoins(); return; }
+  cfFlipping = true;
+  gc -= cfBet;
+  updateDisplays();
+  LM_Sound.spin();
+  const coin = document.getElementById('theCoin');
+  const result = Math.random() < 0.5 ? 'heads' : 'tails';
+  const won = result === cfPick_val;
+  // Animate
+  coin.style.animation = 'none';
+  coin.offsetHeight; // reflow
+  // Land on correct face
+  const finalRot = result === 'tails' ? 1800 : 1980; // tails=180deg end, heads=0deg end
+  coin.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  coin.style.transform = `rotateY(${finalRot}deg)`;
+  setTimeout(function() {
+    coin.style.transition = '';
+    if (won) {
+      const winAmt = cfBet * 2;
+      gc += winAmt;
+      cfWins++;
+      cfStreak = cfStreak > 0 ? cfStreak + 1 : 1;
+      document.getElementById('cfResult').className = 'cf-result win';
+      document.getElementById('cfResult').textContent = `ð ${result.toUpperCase()}! +${winAmt.toLocaleString()} GC`;
+      if (cfStreak >= 3) { LM_Sound.bigWin(); } else { LM_Sound.smallWin(); }
+      updateMissionProgress('win', 1);
+    } else {
+      cfLosses++;
+      cfStreak = cfStreak < 0 ? cfStreak - 1 : -1;
+      document.getElementById('cfResult').className = 'cf-result lose';
+      document.getElementById('cfResult').textContent = `ð ${result.toUpperCase()}! Lost ${cfBet.toLocaleString()} GC`;
+      LM_Sound.lose();
+    }
+    document.getElementById('cfWins').textContent = cfWins;
+    document.getElementById('cfLosses').textContent = cfLosses;
+    document.getElementById('cfStreak').textContent = Math.abs(cfStreak) + (cfStreak > 1 ? 'ð¥' : cfStreak < -1 ? 'âï¸' : '');
+    updateDisplays();
+    cfFlipping = false;
+    const btn = document.getElementById('cfFlipBtn');
+    btn.disabled = false;
+    btn.textContent = 'ðª FLIP AGAIN!';
+    cfPick_val = null;
+    document.getElementById('cfHeadsBtn').classList.remove('selected');
+    document.getElementById('cfTailsBtn').classList.remove('selected');
+  }, 1600);
+}
+
+// ââ LEADERBOARD âââââââââââââââââââââââââââââââââââââââââââ
+async function loadLeaderboard() {
+  const list = document.getElementById('lbList');
+  list.innerHTML = '<div class="lb-loading">â³ Loading...</div>';
+  try {
+    const res = await fetch('/api/leaderboard');
+    const data = await res.json();
+    const entries = data.entries || [];
+    const myName = localStorage.getItem('lm_player_name') || '';
+    if (document.getElementById('lbNameInput')) {
+      document.getElementById('lbNameInput').value = myName;
+    }
+    if (!entries.length) {
+      list.innerHTML = '<div class="lb-empty">No scores yet â be the first!</div>';
+      return;
+    }
+    const medals = ['ð¥','ð¥','ð¥'];
+    list.innerHTML = entries.slice(0, 20).map(function(e, i) {
+      const isMe = e.name === myName;
+      return '<div class="lb-entry' + (isMe ? ' me' : '') + '">'
+        + '<div class="lb-rank">' + (medals[i] || '#' + (i+1)) + '</div>'
+        + '<div class="lb-info">'
+        + '<div class="lb-player">' + e.name + (isMe ? ' ð You' : '') + '</div>'
+        + '<div class="lb-score">Spins: ' + (e.spins||0) + '  â¢  Wins: ' + (e.wins||0) + '</div>'
+        + '</div>'
+        + '<div class="lb-gc">' + (e.gc||0).toLocaleString() + ' GC</div>'
+        + '</div>';
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div class="lb-empty">Could not load leaderboard.</div>';
+  }
+}
+
+async function submitScore() {
+  const name = document.getElementById('lbNameInput').value.trim();
+  if (!name) { toast('Enter your name first!'); return; }
+  if (name.length < 2) { toast('Name must be at least 2 characters'); return; }
+  localStorage.setItem('lm_player_name', name);
+  try {
+    await fetch('/api/leaderboard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, gc, sc, spins: totalSpins || 0, wins: totalWins || 0 })
+    });
+    LM_Sound.coin();
+    toast('Score posted! ð');
+    loadLeaderboard();
+  } catch(e) {
+    toast('Could not post score â try again');
+  }
+}
+
+// ââ LUCKY MAZE SOUND ENGINE ââââââââââââââââââââââââââââââ
+const LM_Sound = (function() {
+  let ctx = null;
+  let enabled = localStorage.getItem('lm_sound') !== '0';
+
+  function getCtx() {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // Unlock audio on first user interaction (required by browsers)
+  var _unlocked = false;
+  function unlockAudio() {
+    if (_unlocked) return;
+    _unlocked = true;
+    try {
+      var c = getCtx();
+      var buf = c.createBuffer(1, 1, 22050);
+      var src = c.createBufferSource();
+      src.buffer = buf;
+      src.connect(c.destination);
+      src.start(0);
+      src.stop(0.001);
+      c.resume();
+    } catch(e) {}
+  }
+  document.addEventListener('touchstart', unlockAudio, {once: true});
+  document.addEventListener('mousedown', unlockAudio, {once: true});
+  document.addEventListener('click', unlockAudio, {once: true});
+
+  function tone(freq, type, vol, duration, delay=0) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.connect(gain);
+      gain.connect(c.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, c.currentTime + delay);
+      gain.gain.setValueAtTime(vol, c.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + duration);
+      osc.start(c.currentTime + delay);
+      osc.stop(c.currentTime + delay + duration);
+    } catch(e) {}
+  }
+
+  function noise(vol, duration, delay=0) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const buf = c.createBuffer(1, c.sampleRate * duration, c.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i=0; i<data.length; i++) data[i] = Math.random()*2-1;
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      const gain = c.createGain();
+      src.connect(gain);
+      gain.connect(c.destination);
+      gain.gain.setValueAtTime(vol, c.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + duration);
+      src.start(c.currentTime + delay);
+      src.stop(c.currentTime + delay + duration + 0.01);
+    } catch(e) {}
+  }
+
+  return {
+    isEnabled: () => enabled,
+
+    toggle: function() {
+      enabled = !enabled;
+      localStorage.setItem('lm_sound', enabled ? '1' : '0');
+      return enabled;
+    },
+
+    // Reel spinning â mechanical whir
+    spin: function() {
+      if (!enabled) return;
+      for (let i=0; i<6; i++) {
+        noise(0.08, 0.12, i * 0.1);
+        tone(80 + i*20, 'sawtooth', 0.04, 0.12, i * 0.1);
+      }
+    },
+
+    // Reel stop â click
+    reelStop: function(delay=0) {
+      tone(300, 'square', 0.15, 0.06, delay);
+      noise(0.1, 0.05, delay);
+    },
+
+    // Small win â quick chime
+    smallWin: function() {
+      [523, 659, 784].forEach((f, i) => tone(f, 'sine', 0.2, 0.2, i*0.1));
+    },
+
+    // Medium win â ascending chimes
+    mediumWin: function() {
+      [392, 494, 587, 698, 784].forEach((f, i) => tone(f, 'sine', 0.25, 0.25, i*0.08));
+    },
+
+    // Big win â fanfare
+    bigWin: function() {
+      [523,659,784,1047].forEach((f,i) => { tone(f,'sine',0.3,0.4,i*0.1); tone(f*1.5,'triangle',0.1,0.4,i*0.1); });
+      setTimeout(function() {
+        [784,988,1175,1568].forEach((f,i) => tone(f,'sine',0.25,0.5,i*0.08));
+      }, 600);
+    },
+
+    // Jackpot â epic
+    jackpot: function() {
+      const freqs = [262,330,392,523,659,784,1047,1319,1568];
+      freqs.forEach((f,i) => { tone(f,'sine',0.2,0.8,i*0.06); tone(f*2,'triangle',0.08,0.8,i*0.06); });
+      setTimeout(function() {
+        for(let i=0;i<20;i++) { noise(0.05,0.05,i*0.05); tone(1000+Math.random()*500,'sine',0.1,0.05,i*0.05); }
+      }, 700);
+    },
+
+    // Coins collecting
+    coin: function() {
+      tone(1047,'sine',0.15,0.08);
+      tone(1319,'sine',0.1,0.08,0.05);
+    },
+
+    // Scratch card reveal
+    scratch: function() {
+      noise(0.12, 0.08);
+      tone(200,'sawtooth',0.05,0.08);
+    },
+
+    // Button click
+    click: function() {
+      tone(440,'square',0.08,0.04);
+    },
+
+    // Buy/purchase
+    purchase: function() {
+      [330,415,523].forEach((f,i) => tone(f,'sine',0.15,0.15,i*0.07));
+    },
+
+    // Lose
+    lose: function() {
+      tone(220,'sawtooth',0.1,0.15);
+      tone(196,'sawtooth',0.08,0.2,0.12);
+    }
+  };
+})();
+
+// Sound toggle button
+(function() {
+  const btn = document.createElement('button');
+  btn.id = 'soundToggle';
+  btn.innerHTML = LM_Sound.isEnabled() ? 'ð' : 'ð';
+  btn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9998;background:rgba(124,58,237,0.3);border:1px solid rgba(124,58,237,0.5);color:white;border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+  btn.addEventListener('click', function() {
+    const on = LM_Sound.toggle();
+    btn.innerHTML = on ? 'ð' : 'ð';
+    if (on) LM_Sound.click();
+  });
+  document.body.appendChild(btn);
+})();
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      console.log('Lucky Maze SW registered');
+    }).catch(function(err) {
+      console.log('SW registration failed:', err);
+    });
+  });
+}
+
+// Install prompt
+let deferredPrompt;
+const banner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const closeBtn = document.getElementById('installClose');
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(function() {
+    if (!localStorage.getItem('lm_install_dismissed')) {
+      banner.classList.add('show');
+    }
+  }, 3000);
+});
+
+installBtn.addEventListener('click', async function() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const result = await deferredPrompt.userChoice;
+  if (result.outcome === 'accepted') {
+    banner.classList.remove('show');
+    localStorage.setItem('lm_install_dismissed', '1');
+  }
+  deferredPrompt = null;
+});
+
+closeBtn.addEventListener('click', function() {
+  banner.classList.remove('show');
+  localStorage.setItem('lm_install_dismissed', '1');
+});
+
+// Show iOS install instructions
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.navigator.standalone;
+if (isIOS && !isStandalone && !localStorage.getItem('lm_install_dismissed')) {
+  setTimeout(function() {
+    banner.querySelector('.install-text strong').textContent = 'Add to your home screen!';
+    banner.querySelector('.install-text span').textContent = 'Tap the Share button, then "Add to Home Screen"';
+    banner.querySelector('#installBtn').textContent = 'ð± How to Install';
+    banner.querySelector('#installBtn').onclick = function() {
+      alert('To install Lucky Maze on iPhone:\n\n1. Tap the Share button (â¡â) at the bottom\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" â done!');
+    };
+    banner.classList.add('show');
+  }, 3000);
+}
+</script>
+
 </body>
 </html>
