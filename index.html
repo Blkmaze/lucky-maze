@@ -2602,7 +2602,7 @@ async function submitAccount() {
 function skipAccount() {
   localStorage.setItem('lm_guest', '1');
   document.getElementById('accountModal').style.display = 'none';
-  toast('Playing as guest â coins won't sync across devices');
+  toast(`Playing as guest — coins won't sync across devices`);
 }
 
 // Sync balance to server every 5 minutes and on page close
