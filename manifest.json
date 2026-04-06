@@ -1,0 +1,49 @@
+{
+  "name": "Lucky Maze — Spin. Scratch. Win.",
+  "short_name": "Lucky Maze",
+  "description": "Free social casino — slots, scratch cards, daily bonuses. Use Gold Coins to play, earn Sweep Coins to redeem.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0a14",
+  "theme_color": "#7c3aed",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play Slots",
+      "short_name": "Slots",
+      "description": "Jump straight to the slot machine",
+      "url": "/?game=slots",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Scratch Cards",
+      "short_name": "Scratch",
+      "description": "Play scratch cards",
+      "url": "/?game=scratch",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
