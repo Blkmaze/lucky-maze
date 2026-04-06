@@ -1206,7 +1206,7 @@ canvas.scratch {
     <span>Spin · Scratch · Win</span>
   </div>
   <div class="header-right">
-    <div class="coin-display" onclick="openCoinsModal()">
+    <div class="coin-display" onclick="openBuyCoins()">
       <div class="coin-icon">🪙</div>
       <div class="coin-amount" id="gcDisplay">25,000</div>
     </div>
@@ -1214,7 +1214,7 @@ canvas.scratch {
       <div class="sc-icon">SC</div>
       <div class="sc-amount" id="scDisplay">0.30</div>
     </div>
-    <button class="get-coins-btn" onclick="openCoinsModal()">+ Get Coins</button>
+    <button class="get-coins-btn" onclick="openBuyCoins()">+ Get Coins</button>
   </div>
 </header>
 
@@ -1238,7 +1238,7 @@ canvas.scratch {
       <div class="hero-sub">Free to play · Real cash prizes · Daily bonuses</div>
       <div class="hero-btns">
         <button class="hero-btn-primary" onclick="claimDaily()">🎁 Claim Daily Bonus</button>
-        <button class="hero-btn-secondary" onclick="openCoinsModal()">Get More Coins</button>
+        <button class="hero-btn-secondary" onclick="openBuyCoins()">Get More Coins</button>
       </div>
     </div>
     <div class="hero-prizes">
@@ -1747,11 +1747,12 @@ async function spin() {
   if (spinning) return;
   if (gc < currentBet) {
     toast('Not enough Gold Coins! Get more coins first.');
-    openCoinsModal();
+    openBuyCoins();
     return;
   }
   spinning = true;
   gc -= currentBet;
+  totalSpins++;
   updateDisplays();
 
   const btn = document.getElementById('spinBtn');
@@ -1821,6 +1822,7 @@ async function spin() {
       }
     });
     if (maxMatch >= 4) showWin(winMsg, `+${winGC.toLocaleString()} GC${winSC>0?' & +'+winSC+' SC':''}`);
+    totalWins++;
     updateMissionProgress('win', 1);
   } else {
     LM_Sound.lose();
@@ -1944,7 +1946,7 @@ function initScratchCanvas(idx, card) {
 function playScratch(idx) {
   LM_Sound.click();
   const card = SCRATCH_CARDS_DEF[idx];
-  if (gc < card.cost) { toast('Not enough coins!'); openCoinsModal(); return; }
+  if (gc < card.cost) { toast('Not enough coins!'); openBuyCoins(); return; }
   gc -= card.cost;
   updateDisplays();
   // Reset reveal
@@ -2063,25 +2065,83 @@ function updatePayInstructions() {
   }
 }
 
-function confirmBuyPackage() {
+async function confirmBuyPackage() {
   if (!pendingPkg) return;
+
+  // Get or create player ID
+  let playerId = localStorage.getItem('lm_player_id');
+  if (!playerId) {
+    playerId = 'P' + Date.now() + Math.random().toString(36).slice(2,6).toUpperCase();
+    localStorage.setItem('lm_player_id', playerId);
+  }
+  const playerName = localStorage.getItem('lm_player_name') || 'Player';
+
+  // Submit pending purchase to server
+  try {
+    await fetch('/api/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerId,
+        playerName,
+        price: pendingPkg.price,
+        coins: pendingPkg.coins,
+        bonusSc: pendingPkg.bonusSc,
+        method: selectedPay,
+        status: 'pending',
+        ts: Date.now()
+      })
+    });
+  } catch(e) {}
+
+  // Open payment app
   const url = selectedPay === 'cashapp'
-    ? `https://cash.app/${CASHAPP_HANDLE}/${pendingPkg.price.toFixed(2)}?note=${encodeURIComponent('Lucky Maze Coins')}`
+    ? `https://cash.app/${CASHAPP_HANDLE}/${pendingPkg.price.toFixed(2)}?note=${encodeURIComponent('Lucky Maze - ' + playerId)}`
     : `https://paypal.me/${PAYPAL_HANDLE.includes('@') ? PAYPAL_HANDLE.split('@')[0] : PAYPAL_HANDLE}/${pendingPkg.price.toFixed(2)}USD`;
   window.open(url, '_blank');
   closeModal('buyModal');
-  toast('✅ Payment opened! Coins will be added after confirmation.');
+
+  // Show confirmation with player ID
+  toast(`✅ Payment opened! Your ID: ${playerId} — coins added after confirmation.`);
+  LM_Sound.purchase();
+
+  // Store pending purchase locally too
+  const pending = JSON.parse(localStorage.getItem('lm_pending_purchases') || '[]');
+  pending.push({ playerId, price: pendingPkg.price, coins: pendingPkg.coins, bonusSc: pendingPkg.bonusSc, method: selectedPay, ts: Date.now() });
+  localStorage.setItem('lm_pending_purchases', JSON.stringify(pending));
 }
 
 // ── REDEEM ─────────────────────────────────────────────────
-function submitRedeem() {
+async function submitRedeem() {
   const amount = parseFloat(document.getElementById('redeemAmount').value);
   const handle = document.getElementById('redeemHandle').value.trim();
   if (!amount || amount < 100) { toast('Minimum 100 SC to redeem.'); return; }
   if (amount > sc) { toast('Not enough SC.'); return; }
   if (!handle) { toast('Enter your Cash App or PayPal.'); return; }
-  toast(`✅ Redemption request submitted! $${amount.toFixed(2)} will be sent to ${handle} within 24–48 hrs.`);
-  closeModal('redeemModal');
+
+  const playerId = localStorage.getItem('lm_player_id') || 'unknown';
+  const playerName = localStorage.getItem('lm_player_name') || 'Player';
+
+  try {
+    await fetch('/api/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'redeem',
+        playerId, playerName,
+        amount, handle,
+        status: 'pending',
+        ts: Date.now()
+      })
+    });
+    sc -= amount;
+    updateDisplays();
+    toast(`✅ Redemption request submitted! $${amount.toFixed(2)} → ${handle} within 24–48 hrs.`);
+    closeModal('redeemModal');
+  } catch(e) {
+    toast('✅ Request submitted! We will process within 24–48 hrs.');
+    closeModal('redeemModal');
+  }
 }
 
 // ── WIN OVERLAY ────────────────────────────────────────────
@@ -2157,6 +2217,70 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 
+<!-- Account Modal -->
+<div id="accountModal" class="account-modal-overlay" style="display:none;">
+  <div class="account-modal">
+    <div class="account-title">🎰 Lucky Maze</div>
+    <div class="account-sub">Create an account to save your coins across devices</div>
+    <div class="account-tabs">
+      <button class="account-tab active" id="regTab" onclick="switchAccountTab('register')">Create Account</button>
+      <button class="account-tab" id="loginTab" onclick="switchAccountTab('login')">Sign In</button>
+    </div>
+    <div id="accountForm">
+      <div class="account-field">
+        <label>Username</label>
+        <input id="accUsername" placeholder="Choose a username" maxlength="20" autocomplete="off">
+      </div>
+      <div class="account-field">
+        <label>4-digit PIN</label>
+        <input id="accPin" type="password" inputmode="numeric" placeholder="Choose a PIN" maxlength="6" autocomplete="off">
+      </div>
+      <button class="account-submit" onclick="submitAccount()">🎰 Create Account</button>
+      <div class="account-err" id="accountErr"></div>
+      <a class="account-skip" onclick="skipAccount()">Skip for now — play as guest</a>
+    </div>
+  </div>
+</div>
+
+<!-- Buy Coins Modal -->
+<div id="buyCoinsModal" class="account-modal-overlay" style="display:none;">
+  <div class="account-modal" style="max-width:440px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div class="account-title" style="margin:0;">💰 Get Coins</div>
+      <button onclick="closeBuyCoins()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px;">Purchase Gold Coins — Sweep Coins included FREE!</div>
+    <div class="packages-grid">
+      <div class="pkg-card" onclick="buyPackage('starter')">
+        <div class="pkg-gc">50,000 GC</div>
+        <div class="pkg-sc">+ 2 SC FREE</div>
+        <div class="pkg-price">$4.99</div>
+        <div class="pkg-price-sub">Starter Pack</div>
+      </div>
+      <div class="pkg-card popular" onclick="buyPackage('popular')">
+        <div class="pkg-popular-badge">⭐ MOST POPULAR</div>
+        <div class="pkg-gc">150,000 GC</div>
+        <div class="pkg-sc">+ 5 SC FREE</div>
+        <div class="pkg-price">$9.99</div>
+        <div class="pkg-price-sub">Popular Pack</div>
+      </div>
+      <div class="pkg-card" onclick="buyPackage('value')">
+        <div class="pkg-gc">500,000 GC</div>
+        <div class="pkg-sc">+ 15 SC FREE</div>
+        <div class="pkg-price">$24.99</div>
+        <div class="pkg-price-sub">Value Pack</div>
+      </div>
+      <div class="pkg-card" onclick="buyPackage('premium')">
+        <div class="pkg-gc">1,200,000 GC</div>
+        <div class="pkg-sc">+ 35 SC FREE</div>
+        <div class="pkg-price">$49.99</div>
+        <div class="pkg-price-sub">Premium Pack</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">Payments processed via PayPal · Coins credited automatically · GC have no cash value</div>
+  </div>
+</div>
+
 <!-- PWA Install Banner -->
 <div id="installBanner">
   <div class="install-icon">🎰</div>
@@ -2170,6 +2294,179 @@ document.addEventListener('keydown', function(e) {
 
 <!-- PWA + Service Worker -->
 <script>
+
+// ── ACCOUNT SYSTEM ───────────────────────────────────────
+let currentAccount = null;
+let accountTab = 'register';
+let totalSpins = 0;
+let totalWins = 0;
+
+// Load saved account on startup
+(async function initAccount() {
+  const saved = localStorage.getItem('lm_account');
+  if (saved) {
+    try {
+      const { username, pin } = JSON.parse(saved);
+      const res = await fetch(`/api/accounts/balance?username=${encodeURIComponent(username)}&pin=${encodeURIComponent(pin)}`);
+      if (res.ok) {
+        const data = await res.json();
+        currentAccount = { username, pin, ...data };
+        gc = data.gc;
+        sc = data.sc;
+        totalSpins = data.totalSpins || 0;
+        totalWins = data.totalWins || 0;
+        updateDisplays();
+        updateAccountBadge();
+        return;
+      }
+    } catch(e) {}
+  }
+  // Show account modal after 2 seconds if not logged in
+  setTimeout(function() {
+    if (!currentAccount && !localStorage.getItem('lm_guest')) {
+      document.getElementById('accountModal').style.display = 'flex';
+    }
+  }, 2000);
+})();
+
+function updateAccountBadge() {
+  if (!currentAccount) return;
+  // Update header to show account info
+  const existing = document.getElementById('accountBadge');
+  if (existing) {
+    existing.querySelector('.account-badge-name').textContent = currentAccount.username;
+    return;
+  }
+  const badge = document.createElement('div');
+  badge.id = 'accountBadge';
+  badge.className = 'account-badge';
+  badge.style.cssText = 'position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:100;';
+  badge.innerHTML = `<div class="account-badge-avatar">${currentAccount.username[0].toUpperCase()}</div>
+    <div><div class="account-badge-name">${currentAccount.username}</div>
+    <div class="account-badge-sub">Tap to sync</div></div>`;
+  badge.onclick = syncAccount;
+  document.body.appendChild(badge);
+}
+
+function switchAccountTab(tab) {
+  accountTab = tab;
+  document.getElementById('regTab').classList.toggle('active', tab === 'register');
+  document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+  const btn = document.querySelector('#accountForm .account-submit');
+  btn.textContent = tab === 'register' ? '🎰 Create Account' : '🔑 Sign In';
+  document.getElementById('accountErr').textContent = '';
+}
+
+async function submitAccount() {
+  const username = document.getElementById('accUsername').value.trim();
+  const pin = document.getElementById('accPin').value.trim();
+  const err = document.getElementById('accountErr');
+  err.textContent = '';
+  if (!username || username.length < 2) { err.textContent = 'Username must be at least 2 characters'; return; }
+  if (!pin || pin.length < 4) { err.textContent = 'PIN must be at least 4 digits'; return; }
+
+  const endpoint = accountTab === 'register' ? '/api/accounts/register' : '/api/accounts/login';
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, pin })
+    });
+    const data = await res.json();
+    if (!res.ok) { err.textContent = data.error || 'Error — try again'; return; }
+    currentAccount = { username, pin, ...data.account };
+    gc = data.account.gc;
+    sc = data.account.sc;
+    localStorage.setItem('lm_account', JSON.stringify({ username, pin }));
+    updateDisplays();
+    updateAccountBadge();
+    document.getElementById('accountModal').style.display = 'none';
+    LM_Sound.coin();
+    toast(accountTab === 'register' ? '🎉 Account created! Your coins are saved.' : '👋 Welcome back, ' + username + '!');
+  } catch(e) {
+    err.textContent = 'Network error — try again';
+  }
+}
+
+function skipAccount() {
+  localStorage.setItem('lm_guest', '1');
+  document.getElementById('accountModal').style.display = 'none';
+  toast('Playing as guest — coins won't sync across devices');
+}
+
+// Sync balance to server every 5 minutes and on page close
+async function syncAccount() {
+  if (!currentAccount) return;
+  try {
+    await fetch('/api/accounts/sync', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentAccount.username, pin: currentAccount.pin, gc, sc, totalSpins, totalWins })
+    });
+    toast('✅ Coins synced!');
+  } catch(e) {}
+}
+setInterval(syncAccount, 5 * 60 * 1000);
+window.addEventListener('beforeunload', syncAccount);
+
+// Buy coins flow
+async function openBuyCoins() {
+  if (!currentAccount) {
+    document.getElementById('accountModal').style.display = 'flex';
+    toast('Create an account first to purchase coins!');
+    return;
+  }
+  document.getElementById('buyCoinsModal').style.display = 'flex';
+}
+
+function closeBuyCoins() {
+  document.getElementById('buyCoinsModal').style.display = 'none';
+}
+
+async function buyPackage(packageId) {
+  if (!currentAccount) { toast('Sign in to purchase!'); return; }
+  try {
+    const res = await fetch('/api/payment/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentAccount.username, packageId })
+    });
+    const data = await res.json();
+    if (data.url) {
+      closeBuyCoins();
+      window.open(data.url, '_blank');
+      toast('Complete payment in PayPal — coins credited automatically!');
+    }
+  } catch(e) {
+    toast('Error — try again');
+  }
+}
+
+// Check for payment success on return
+(function checkPaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    window.history.replaceState({}, '', '/');
+    toast('Payment received! Coins being credited... ');
+    // Sync balance after 5 seconds to get updated coins
+    setTimeout(async function() {
+      if (currentAccount) {
+        const res = await fetch(`/api/accounts/balance?username=${encodeURIComponent(currentAccount.username)}&pin=${encodeURIComponent(currentAccount.pin)}`);
+        if (res.ok) {
+          const data = await res.json();
+          gc = data.gc; sc = data.sc;
+          updateDisplays();
+          LM_Sound.bigWin();
+          toast('🎉 Coins credited to your account!');
+        }
+      }
+    }, 5000);
+  }
+  if (params.get('payment') === 'cancelled') {
+    window.history.replaceState({}, '', '/');
+    toast('Payment cancelled');
+  }
+})();
 
 // ── COIN FLIP GAME ───────────────────────────────────────
 let cfPick_val = null, cfBet = 100, cfWins = 0, cfLosses = 0, cfStreak = 0, cfFlipping = false;
@@ -2193,7 +2490,7 @@ function cfSetBet(amount, el) {
 
 function flipCoin() {
   if (!cfPick_val || cfFlipping) return;
-  if (gc < cfBet) { toast('Not enough Gold Coins!'); openCoinsModal(); return; }
+  if (gc < cfBet) { toast('Not enough Gold Coins!'); openBuyCoins(); return; }
   cfFlipping = true;
   gc -= cfBet;
   updateDisplays();
