@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Lucky Maze — Spin. Scratch. Win.</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lucky Maze">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="description" content="Free social casino — slots, scratch cards, daily bonuses. Spin to win!">
+<meta property="og:title" content="Lucky Maze — Spin. Scratch. Win.">
+<meta property="og:description" content="Free social casino games. No download required — play instantly!">
+<meta property="og:image" content="/icon-512.png">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1059,9 +1069,135 @@ canvas.scratch {
   transition: width 0.5s ease;
 }
 .mission-reward { font-size: 10px; color: var(--gold); font-weight: 700; }
+
+/* ── LEADERBOARD ─────────────────────────────────────── */
+.leaderboard-wrap { padding: 16px; max-width: 480px; margin: 0 auto; }
+.lb-header { text-align: center; margin-bottom: 20px; }
+.lb-title { font-family: 'Cinzel Decorative', serif; font-size: 20px; color: var(--gold); }
+.lb-subtitle { font-size: 12px; color: var(--text3); margin-top: 4px; }
+.lb-name-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.lb-name-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text); font-size: 14px; outline: none; }
+.lb-name-input:focus { border-color: var(--gold); }
+.lb-save-btn { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #111; border: none; border-radius: 10px; padding: 10px 16px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.lb-list { display: flex; flex-direction: column; gap: 8px; }
+.lb-entry { display: flex; align-items: center; gap: 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
+.lb-rank { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+.lb-info { flex: 1; }
+.lb-player { font-weight: 700; color: var(--text); font-size: 14px; }
+.lb-score { font-size: 12px; color: var(--text3); }
+.lb-gc { font-weight: 700; color: var(--gold); font-size: 15px; }
+.lb-entry.me { border-color: var(--gold); background: var(--gold-dim); }
+.lb-loading { text-align: center; padding: 40px; color: var(--text3); }
+.lb-empty { text-align: center; padding: 40px; color: var(--text3); font-size: 14px; }
+
+/* ── COIN FLIP ──────────────────────────────────────── */
+.coinflip-wrap { padding: 20px 16px; max-width: 420px; margin: 0 auto; text-align: center; }
+.coin-container { position: relative; width: 160px; height: 160px; margin: 24px auto; perspective: 800px; }
+.coin { width: 160px; height: 160px; position: relative; transform-style: preserve-3d; transition: transform 0.1s; cursor: pointer; }
+.coin-face { position: absolute; inset: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 64px; backface-visibility: hidden; box-shadow: 0 8px 32px rgba(245,200,66,0.3); }
+.coin-heads { background: radial-gradient(circle at 35% 35%, #ffe566, #f5c842, #c8960c); }
+.coin-tails { background: radial-gradient(circle at 35% 35%, #b87eff, #7c3aed, #4c1d95); transform: rotateY(180deg); }
+.coin.flipping { animation: coinSpin 1.5s ease-in-out; }
+@keyframes coinSpin {
+  0%   { transform: rotateY(0); }
+  40%  { transform: rotateY(1440deg); }
+  70%  { transform: rotateY(1620deg); }
+  85%  { transform: rotateY(1710deg); }
+  100% { transform: rotateY(1800deg); }
+}
+.cf-choose { display: flex; gap: 12px; justify-content: center; margin: 16px 0; }
+.cf-btn { flex: 1; padding: 14px; border-radius: 14px; border: 2px solid; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; max-width: 160px; }
+.cf-heads { background: rgba(245,200,66,0.1); border-color: var(--gold); color: var(--gold); }
+.cf-tails { background: rgba(124,58,237,0.1); border-color: var(--purple); color: var(--purple3); }
+.cf-btn.selected { transform: scale(1.05); }
+.cf-heads.selected { background: rgba(245,200,66,0.25); }
+.cf-tails.selected { background: rgba(124,58,237,0.25); }
+.cf-bet-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+.cf-bet-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface2); color: var(--text2); font-size: 13px; font-weight: 600; cursor: pointer; }
+.cf-bet-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+.cf-flip-btn { width: 100%; padding: 16px; border-radius: 14px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #111; border: none; font-weight: 900; font-size: 16px; cursor: pointer; margin-top: 8px; letter-spacing: 1px; }
+.cf-flip-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cf-result { font-size: 22px; font-weight: 800; margin: 12px 0; min-height: 32px; }
+.cf-result.win { color: var(--gold); }
+.cf-result.lose { color: var(--red); }
+.cf-stats { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
+.cf-stat { text-align: center; }
+.cf-stat-val { font-size: 20px; font-weight: 800; color: var(--gold); }
+.cf-stat-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── LEADERBOARD ──────────────────────────────────────── */
+/* ── PWA INSTALL BANNER ─────────────────────────────── */
+#installBanner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #1a1428, #2d1b69);
+  border-top: 1px solid #7c3aed;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 -4px 24px rgba(124,58,237,0.4);
+  animation: slideUp 0.4s ease;
+}
+#installBanner.show { display: flex; }
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.install-icon { font-size: 32px; flex-shrink: 0; }
+.install-text { flex: 1; }
+.install-text strong { display: block; color: #f5c842; font-size: 14px; }
+.install-text span { font-size: 12px; color: #a89ac5; }
+.install-btn {
+  background: linear-gradient(135deg, #7c3aed, #9d5cf6);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.install-close {
+  background: none;
+  border: none;
+  color: #6b5a8a;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+/* Mute button */
+#muteBtn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  background: rgba(13,10,20,0.8);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s;
+}
+#muteBtn:hover { border-color: var(--gold); }
 </style>
 </head>
 <body>
+<button id="muteBtn" title="Toggle sound" onclick="var m=LMSound.toggleMute();this.textContent=m?'🔇':'🔊';">🔊</button>
+
 
 <!-- HEADER -->
 <header class="header">
@@ -1087,6 +1223,8 @@ canvas.scratch {
   <button class="nav-tab active" onclick="showTab('slots', this)">🎰 Slots</button>
   <button class="nav-tab" onclick="showTab('scratch', this)">🎟️ Scratch</button>
   <button class="nav-tab" onclick="showTab('missions', this)">🎯 Missions</button>
+  <button class="nav-tab" onclick="showTab('coinflip', this)">🪙 Coin Flip</button>
+  <button class="nav-tab" onclick="showTab('leaderboard', this); loadLeaderboard()">🏆 Leaderboard</button>
   <button class="nav-tab" onclick="openRedeemModal()">💰 Redeem SC</button>
 </div>
 
@@ -1190,7 +1328,52 @@ canvas.scratch {
   </div>
 
   <!-- MISSIONS TAB -->
-  <div id="tab-missions" style="display:none;">
+  <div id="tab-coinflip" style="display:none;">
+  <div class="coinflip-wrap">
+    <div style="font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">🪙 Coin Flip</div>
+    <div style="font-size:12px;color:var(--text3);">Pick heads or tails — win 2× your bet!</div>
+    <div class="coin-container">
+      <div class="coin" id="theCoin">
+        <div class="coin-face coin-heads">👑</div>
+        <div class="coin-face coin-tails">⭐</div>
+      </div>
+    </div>
+    <div class="cf-choose">
+      <button class="cf-btn cf-heads" id="cfHeadsBtn" onclick="cfPick('heads')">👑 HEADS</button>
+      <button class="cf-btn cf-tails" id="cfTailsBtn" onclick="cfPick('tails')">⭐ TAILS</button>
+    </div>
+    <div class="cf-bet-row">
+      <button class="cf-bet-btn active" onclick="cfSetBet(100, this)">100</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(500, this)">500</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(1000, this)">1K</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(5000, this)">5K</button>
+      <button class="cf-bet-btn" onclick="cfSetBet(10000, this)">10K</button>
+    </div>
+    <div class="cf-result" id="cfResult"></div>
+    <button class="cf-flip-btn" id="cfFlipBtn" onclick="flipCoin()" disabled>SELECT HEADS OR TAILS</button>
+    <div class="cf-stats">
+      <div class="cf-stat"><div class="cf-stat-val" id="cfWins">0</div><div class="cf-stat-lbl">Wins</div></div>
+      <div class="cf-stat"><div class="cf-stat-val" id="cfStreak">0</div><div class="cf-stat-lbl">Streak</div></div>
+      <div class="cf-stat"><div class="cf-stat-val" id="cfLosses">0</div><div class="cf-stat-lbl">Losses</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-leaderboard" style="display:none;">
+  <div class="leaderboard-wrap">
+    <div class="lb-header">
+      <div class="lb-title">🏆 LEADERBOARD</div>
+      <div class="lb-subtitle">Top players by Gold Coins</div>
+    </div>
+    <div class="lb-name-row">
+      <input class="lb-name-input" id="lbNameInput" placeholder="Enter your name to appear on leaderboard" maxlength="20">
+      <button class="lb-save-btn" onclick="submitScore()">Post Score</button>
+    </div>
+    <div class="lb-list" id="lbList"><div class="lb-loading">Loading leaderboard...</div></div>
+  </div>
+</div>
+
+<div id="tab-missions" style="display:none;">
     <div class="section-title">🎯 Daily Missions</div>
     <div class="missions-row" id="missionsGrid"></div>
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;">
@@ -1311,8 +1494,9 @@ canvas.scratch {
       <div id="payInstructions" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;"></div>
       <button class="buy-btn" onclick="confirmBuyPackage()">Complete Purchase</button>
       <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">
-        After payment, message Willie on Cash App/PayPal with your username to receive coins.
+        After payment, message Lucky Maze on Cash App/PayPal with your username to receive coins.
       </div>
+      <button onclick="closeModal('buyModal')" style="width:100%;margin-top:10px;padding:10px;background:transparent;border:1px solid var(--border2);border-radius:10px;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;">✕ Cancel</button>
     </div>
   </div>
 </div>
@@ -1558,6 +1742,8 @@ function weightedRandom() {
 }
 
 async function spin() {
+  LMSound.spin();
+  LM_Sound.spin();
   if (spinning) return;
   if (gc < currentBet) {
     toast('Not enough Gold Coins! Get more coins first.');
@@ -1595,6 +1781,7 @@ async function spin() {
 
   // Spin reels with staggered stops
   const durations = [1200, 1500, 1800, 2100, 2400];
+  durations.forEach((d, r) => setTimeout(() => LM_Sound.reelStop(), d));
   await Promise.all(targetOffsets.map((tgt, r) => animateReelSpin(r, tgt, durations[r])));
 
   // Check wins
@@ -1607,18 +1794,18 @@ async function spin() {
 
   if (maxMatch === 5) {
     if (matchSym === '💎') {
-      winGC = currentBet * 1000; winSC = 5; winMsg = '💎 JACKPOT!! 💎'; spawnConfetti();
+      winGC = currentBet * 1000; winSC = 5; winMsg = '💎 JACKPOT!! 💎'; spawnConfetti(); LM_Sound.jackpot();
     } else if (matchSym === '⭐') {
-      winGC = currentBet * 500; winMsg = '⭐ MEGA WIN! ⭐'; spawnConfetti();
+      winGC = currentBet * 500; winMsg = '⭐ MEGA WIN! ⭐'; spawnConfetti(); LM_Sound.bigWin();
     } else if (matchSym === '🔔') {
-      winGC = currentBet * 200; winMsg = '🔔 BIG WIN! 🔔';
+      winGC = currentBet * 200; winMsg = '🔔 BIG WIN! 🔔'; LM_Sound.bigWin();
     } else {
-      winGC = currentBet * 100; winMsg = `${matchSym}${matchSym}${matchSym} 5 OF A KIND!`;
+      winGC = currentBet * 100; winMsg = `${matchSym}${matchSym}${matchSym} 5 OF A KIND!`; LM_Sound.mediumWin();
     }
   } else if (maxMatch === 4) {
-    winGC = currentBet * 10; winMsg = `4× ${matchSym} — Big Win!`;
+    winGC = currentBet * 10; winMsg = `4× ${matchSym} — Big Win!`; LM_Sound.mediumWin();
   } else if (maxMatch === 3) {
-    winGC = currentBet * 3; winMsg = `3× ${matchSym} — You Win!`;
+    winGC = currentBet * 3; winMsg = `3× ${matchSym} — You Win!`; LM_Sound.smallWin();
   }
 
   if (winGC > 0) {
@@ -1636,6 +1823,7 @@ async function spin() {
     if (maxMatch >= 4) showWin(winMsg, `+${winGC.toLocaleString()} GC${winSC>0?' & +'+winSC+' SC':''}`);
     updateMissionProgress('win', 1);
   } else {
+    LM_Sound.lose();
     document.getElementById('slotWinMsg').textContent = 'No match — spin again!';
     document.getElementById('slotWinMsg').style.color = 'var(--text3)';
   }
@@ -1754,6 +1942,7 @@ function initScratchCanvas(idx, card) {
 }
 
 function playScratch(idx) {
+  LM_Sound.click();
   const card = SCRATCH_CARDS_DEF[idx];
   if (gc < card.cost) { toast('Not enough coins!'); openCoinsModal(); return; }
   gc -= card.cost;
@@ -1868,9 +2057,9 @@ function updatePayInstructions() {
   if (!el || !pendingPkg) return;
   const total = pendingPkg.price.toFixed(2);
   if (selectedPay === 'cashapp') {
-    el.innerHTML = `💚 Send <strong style="color:var(--green);">$${total}</strong> to <strong style="color:var(--green);">" + CASHAPP_HANDLE + "</strong> on Cash App<br><span style="font-size:11px;color:var(--text3);">Include "Lucky Maze coins" in the note</span>`;
+    el.innerHTML = `💚 Send <strong style="color:var(--green);">$${total}</strong> to <strong style="color:var(--green);">Lucky Maze</strong> on Cash App<br><span style="font-size:11px;color:var(--text3);">Include "Lucky Maze" in the note</span>`;
   } else {
-    el.innerHTML = `💙 Send <strong style="color:#60a5fa;">$${total}</strong> to <strong style="color:#60a5fa;">" + PAYPAL_HANDLE + "</strong> on PayPal<br><span style="font-size:11px;color:var(--text3);">Friends & Family — include "Lucky Maze coins" in the note</span>`;
+    el.innerHTML = `💙 Send <strong style="color:#60a5fa;">$${total}</strong> to <strong style="color:#60a5fa;">Lucky Maze</strong> on PayPal<br><span style="font-size:11px;color:var(--text3);">Friends & Family — include "Lucky Maze" in the note</span>`;
   }
 }
 
@@ -1897,6 +2086,7 @@ function submitRedeem() {
 
 // ── WIN OVERLAY ────────────────────────────────────────────
 function showWin(title, amount) {
+  LM_Sound.coin();
   document.getElementById('winAmount').textContent = amount;
   document.querySelector('.win-title').textContent = title;
   document.getElementById('winOverlay').classList.add('open');
@@ -1966,5 +2156,363 @@ document.addEventListener('keydown', function(e) {
   }
 });
 </script>
+
+<!-- PWA Install Banner -->
+<div id="installBanner">
+  <div class="install-icon">🎰</div>
+  <div class="install-text">
+    <strong>Add Lucky Maze to your home screen!</strong>
+    <span>Play anytime, even offline. Free forever.</span>
+  </div>
+  <button class="install-btn" id="installBtn">Install App</button>
+  <button class="install-close" id="installClose">✕</button>
+</div>
+
+<!-- PWA + Service Worker -->
+<script>
+
+// ── COIN FLIP GAME ───────────────────────────────────────
+let cfPick_val = null, cfBet = 100, cfWins = 0, cfLosses = 0, cfStreak = 0, cfFlipping = false;
+
+function cfPick(side) {
+  cfPick_val = side;
+  LM_Sound.click();
+  document.getElementById('cfHeadsBtn').classList.toggle('selected', side === 'heads');
+  document.getElementById('cfTailsBtn').classList.toggle('selected', side === 'tails');
+  const btn = document.getElementById('cfFlipBtn');
+  btn.disabled = false;
+  btn.textContent = '🪙 FLIP COIN!';
+}
+
+function cfSetBet(amount, el) {
+  cfBet = amount;
+  LM_Sound.click();
+  document.querySelectorAll('.cf-bet-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function flipCoin() {
+  if (!cfPick_val || cfFlipping) return;
+  if (gc < cfBet) { toast('Not enough Gold Coins!'); openCoinsModal(); return; }
+  cfFlipping = true;
+  gc -= cfBet;
+  updateDisplays();
+  LM_Sound.spin();
+  const coin = document.getElementById('theCoin');
+  const result = Math.random() < 0.5 ? 'heads' : 'tails';
+  const won = result === cfPick_val;
+  // Animate
+  coin.style.animation = 'none';
+  coin.offsetHeight; // reflow
+  // Land on correct face
+  const finalRot = result === 'tails' ? 1800 : 1980; // tails=180deg end, heads=0deg end
+  coin.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  coin.style.transform = `rotateY(${finalRot}deg)`;
+  setTimeout(function() {
+    coin.style.transition = '';
+    if (won) {
+      const winAmt = cfBet * 2;
+      gc += winAmt;
+      cfWins++;
+      cfStreak = cfStreak > 0 ? cfStreak + 1 : 1;
+      document.getElementById('cfResult').className = 'cf-result win';
+      document.getElementById('cfResult').textContent = `🎉 ${result.toUpperCase()}! +${winAmt.toLocaleString()} GC`;
+      if (cfStreak >= 3) { LM_Sound.bigWin(); } else { LM_Sound.smallWin(); }
+      updateMissionProgress('win', 1);
+    } else {
+      cfLosses++;
+      cfStreak = cfStreak < 0 ? cfStreak - 1 : -1;
+      document.getElementById('cfResult').className = 'cf-result lose';
+      document.getElementById('cfResult').textContent = `😞 ${result.toUpperCase()}! Lost ${cfBet.toLocaleString()} GC`;
+      LM_Sound.lose();
+    }
+    document.getElementById('cfWins').textContent = cfWins;
+    document.getElementById('cfLosses').textContent = cfLosses;
+    document.getElementById('cfStreak').textContent = Math.abs(cfStreak) + (cfStreak > 1 ? '🔥' : cfStreak < -1 ? '❄️' : '');
+    updateDisplays();
+    cfFlipping = false;
+    const btn = document.getElementById('cfFlipBtn');
+    btn.disabled = false;
+    btn.textContent = '🪙 FLIP AGAIN!';
+    cfPick_val = null;
+    document.getElementById('cfHeadsBtn').classList.remove('selected');
+    document.getElementById('cfTailsBtn').classList.remove('selected');
+  }, 1600);
+}
+
+// ── LEADERBOARD ───────────────────────────────────────────
+async function loadLeaderboard() {
+  const list = document.getElementById('lbList');
+  list.innerHTML = '<div class="lb-loading">⏳ Loading...</div>';
+  try {
+    const res = await fetch('/api/leaderboard');
+    const data = await res.json();
+    const entries = data.entries || [];
+    const myName = localStorage.getItem('lm_player_name') || '';
+    if (document.getElementById('lbNameInput')) {
+      document.getElementById('lbNameInput').value = myName;
+    }
+    if (!entries.length) {
+      list.innerHTML = '<div class="lb-empty">No scores yet — be the first!</div>';
+      return;
+    }
+    const medals = ['🥇','🥈','🥉'];
+    list.innerHTML = entries.slice(0, 20).map(function(e, i) {
+      const isMe = e.name === myName;
+      return '<div class="lb-entry' + (isMe ? ' me' : '') + '">'
+        + '<div class="lb-rank">' + (medals[i] || '#' + (i+1)) + '</div>'
+        + '<div class="lb-info">'
+        + '<div class="lb-player">' + e.name + (isMe ? ' 👈 You' : '') + '</div>'
+        + '<div class="lb-score">Spins: ' + (e.spins||0) + '  •  Wins: ' + (e.wins||0) + '</div>'
+        + '</div>'
+        + '<div class="lb-gc">' + (e.gc||0).toLocaleString() + ' GC</div>'
+        + '</div>';
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div class="lb-empty">Could not load leaderboard.</div>';
+  }
+}
+
+async function submitScore() {
+  const name = document.getElementById('lbNameInput').value.trim();
+  if (!name) { toast('Enter your name first!'); return; }
+  if (name.length < 2) { toast('Name must be at least 2 characters'); return; }
+  localStorage.setItem('lm_player_name', name);
+  try {
+    await fetch('/api/leaderboard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, gc, sc, spins: totalSpins || 0, wins: totalWins || 0 })
+    });
+    LM_Sound.coin();
+    toast('Score posted! 🏆');
+    loadLeaderboard();
+  } catch(e) {
+    toast('Could not post score — try again');
+  }
+}
+
+// ── LUCKY MAZE SOUND ENGINE ──────────────────────────────
+const LM_Sound = (function() {
+  let ctx = null;
+  let enabled = localStorage.getItem('lm_sound') !== '0';
+
+  function getCtx() {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // Unlock audio on first user interaction (required by browsers)
+  var _unlocked = false;
+  function unlockAudio() {
+    if (_unlocked) return;
+    _unlocked = true;
+    try {
+      var c = getCtx();
+      var buf = c.createBuffer(1, 1, 22050);
+      var src = c.createBufferSource();
+      src.buffer = buf;
+      src.connect(c.destination);
+      src.start(0);
+      src.stop(0.001);
+      c.resume();
+    } catch(e) {}
+  }
+  document.addEventListener('touchstart', unlockAudio, {once: true});
+  document.addEventListener('mousedown', unlockAudio, {once: true});
+  document.addEventListener('click', unlockAudio, {once: true});
+
+  function tone(freq, type, vol, duration, delay=0) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.connect(gain);
+      gain.connect(c.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, c.currentTime + delay);
+      gain.gain.setValueAtTime(vol, c.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + duration);
+      osc.start(c.currentTime + delay);
+      osc.stop(c.currentTime + delay + duration);
+    } catch(e) {}
+  }
+
+  function noise(vol, duration, delay=0) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const buf = c.createBuffer(1, c.sampleRate * duration, c.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i=0; i<data.length; i++) data[i] = Math.random()*2-1;
+      const src = c.createBufferSource();
+      src.buffer = buf;
+      const gain = c.createGain();
+      src.connect(gain);
+      gain.connect(c.destination);
+      gain.gain.setValueAtTime(vol, c.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + duration);
+      src.start(c.currentTime + delay);
+      src.stop(c.currentTime + delay + duration + 0.01);
+    } catch(e) {}
+  }
+
+  return {
+    isEnabled: () => enabled,
+
+    toggle: function() {
+      enabled = !enabled;
+      localStorage.setItem('lm_sound', enabled ? '1' : '0');
+      return enabled;
+    },
+
+    // Reel spinning — mechanical whir
+    spin: function() {
+      if (!enabled) return;
+      for (let i=0; i<6; i++) {
+        noise(0.08, 0.12, i * 0.1);
+        tone(80 + i*20, 'sawtooth', 0.04, 0.12, i * 0.1);
+      }
+    },
+
+    // Reel stop — click
+    reelStop: function(delay=0) {
+      tone(300, 'square', 0.15, 0.06, delay);
+      noise(0.1, 0.05, delay);
+    },
+
+    // Small win — quick chime
+    smallWin: function() {
+      [523, 659, 784].forEach((f, i) => tone(f, 'sine', 0.2, 0.2, i*0.1));
+    },
+
+    // Medium win — ascending chimes
+    mediumWin: function() {
+      [392, 494, 587, 698, 784].forEach((f, i) => tone(f, 'sine', 0.25, 0.25, i*0.08));
+    },
+
+    // Big win — fanfare
+    bigWin: function() {
+      [523,659,784,1047].forEach((f,i) => { tone(f,'sine',0.3,0.4,i*0.1); tone(f*1.5,'triangle',0.1,0.4,i*0.1); });
+      setTimeout(function() {
+        [784,988,1175,1568].forEach((f,i) => tone(f,'sine',0.25,0.5,i*0.08));
+      }, 600);
+    },
+
+    // Jackpot — epic
+    jackpot: function() {
+      const freqs = [262,330,392,523,659,784,1047,1319,1568];
+      freqs.forEach((f,i) => { tone(f,'sine',0.2,0.8,i*0.06); tone(f*2,'triangle',0.08,0.8,i*0.06); });
+      setTimeout(function() {
+        for(let i=0;i<20;i++) { noise(0.05,0.05,i*0.05); tone(1000+Math.random()*500,'sine',0.1,0.05,i*0.05); }
+      }, 700);
+    },
+
+    // Coins collecting
+    coin: function() {
+      tone(1047,'sine',0.15,0.08);
+      tone(1319,'sine',0.1,0.08,0.05);
+    },
+
+    // Scratch card reveal
+    scratch: function() {
+      noise(0.12, 0.08);
+      tone(200,'sawtooth',0.05,0.08);
+    },
+
+    // Button click
+    click: function() {
+      tone(440,'square',0.08,0.04);
+    },
+
+    // Buy/purchase
+    purchase: function() {
+      [330,415,523].forEach((f,i) => tone(f,'sine',0.15,0.15,i*0.07));
+    },
+
+    // Lose
+    lose: function() {
+      tone(220,'sawtooth',0.1,0.15);
+      tone(196,'sawtooth',0.08,0.2,0.12);
+    }
+  };
+})();
+
+// Sound toggle button
+(function() {
+  const btn = document.createElement('button');
+  btn.id = 'soundToggle';
+  btn.innerHTML = LM_Sound.isEnabled() ? '🔊' : '🔇';
+  btn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9998;background:rgba(124,58,237,0.3);border:1px solid rgba(124,58,237,0.5);color:white;border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+  btn.addEventListener('click', function() {
+    const on = LM_Sound.toggle();
+    btn.innerHTML = on ? '🔊' : '🔇';
+    if (on) LM_Sound.click();
+  });
+  document.body.appendChild(btn);
+})();
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      console.log('Lucky Maze SW registered');
+    }).catch(function(err) {
+      console.log('SW registration failed:', err);
+    });
+  });
+}
+
+// Install prompt
+let deferredPrompt;
+const banner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const closeBtn = document.getElementById('installClose');
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Show banner after 3 seconds
+  setTimeout(function() {
+    if (!localStorage.getItem('lm_install_dismissed')) {
+      banner.classList.add('show');
+    }
+  }, 3000);
+});
+
+installBtn.addEventListener('click', async function() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const result = await deferredPrompt.userChoice;
+  if (result.outcome === 'accepted') {
+    banner.classList.remove('show');
+    localStorage.setItem('lm_install_dismissed', '1');
+  }
+  deferredPrompt = null;
+});
+
+closeBtn.addEventListener('click', function() {
+  banner.classList.remove('show');
+  localStorage.setItem('lm_install_dismissed', '1');
+});
+
+// Show iOS install instructions
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isStandalone = window.navigator.standalone;
+if (isIOS && !isStandalone && !localStorage.getItem('lm_install_dismissed')) {
+  setTimeout(function() {
+    banner.querySelector('.install-text strong').textContent = 'Add to your home screen!';
+    banner.querySelector('.install-text span').textContent = 'Tap the Share button, then "Add to Home Screen"';
+    banner.querySelector('#installBtn').textContent = '📱 How to Install';
+    banner.querySelector('#installBtn').onclick = function() {
+      alert('To install Lucky Maze on iPhone:\n\n1. Tap the Share button (□↑) at the bottom\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done!');
+    };
+    banner.classList.add('show');
+  }, 3000);
+}
+</script>
+
 </body>
 </html>
