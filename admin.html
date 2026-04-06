@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- ParlayPro Live — Admin Portal v1.0 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ParlayPro Live — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--surface3:#222;--border:#2a2a2a;--border2:#333;--green:#16a34a;--green-light:#22c55e;--green-dim:rgba(22,163,74,0.15);--yellow:#eab308;--red:#dc2626;--text:#f5f5f5;--text2:#a3a3a3;--text3:#525252;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
+  
+  /* PIN SCREEN */
+  #pinScreen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;}
+  .pin-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:40px;text-align:center;max-width:360px;width:100%;margin:16px;}
+  .pin-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;margin-bottom:8px;}
+  .pin-sub{font-size:13px;color:var(--text2);margin-bottom:24px;}
+  .pin-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:14px;color:var(--text);font-size:24px;font-family:'IBM Plex Mono',monospace;text-align:center;letter-spacing:8px;outline:none;margin-bottom:16px;}
+  .pin-input:focus{border-color:var(--green);}
+  .pin-btn{width:100%;background:var(--green);border:none;border-radius:10px;color:white;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;padding:14px;cursor:pointer;}
+  .pin-error{color:var(--red);font-size:13px;margin-top:8px;}
+
+  /* MAIN LAYOUT */
+  #adminApp{display:none;}
+  .admin-header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+  .admin-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;}
+  .admin-subtitle{font-size:12px;color:var(--text3);}
+  .header-right{display:flex;gap:8px;align-items:center;}
+  .btn-sm{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all 0.15s;}
+  .btn-green{background:rgba(22,163,74,0.15);border-color:rgba(22,163,74,0.3);color:var(--green-light);}
+  .btn-green:hover{background:rgba(22,163,74,0.25);}
+  .btn-red{background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.3);color:#fca5a5;}
+  .btn-blue{background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.3);color:#93c5fd;}
+
+  .admin-body{padding:24px;max-width:1200px;margin:0 auto;}
+
+  /* STATS ROW */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
+  .stat-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
+  .stat-value{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;line-height:1;}
+  .stat-sub{font-size:11px;color:var(--text3);margin-top:4px;}
+
+  /* BOARDS GRID */
+  .boards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:24px;}
+  .board-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .board-card-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .board-card-title{font-weight:700;font-size:15px;}
+  .board-card-status{font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;text-transform:uppercase;}
+  .status-live{background:rgba(220,38,38,0.2);color:#f87171;border:1px solid rgba(220,38,38,0.3);}
+  .status-final{background:#2a2a2a;color:#aaa;}
+  .status-upcoming{background:rgba(234,179,8,0.15);color:#fbbf24;}
+  .board-card-body{padding:14px 16px;}
+  .board-stat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .board-stat-row:last-child{border-bottom:none;}
+  .board-stat-label{color:var(--text2);}
+  .board-stat-value{font-weight:700;font-family:'IBM Plex Mono',monospace;}
+  .board-actions{padding:12px 16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;}
+  .board-btn{width:100%;padding:8px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all 0.15s;text-align:center;}
+
+  /* PENDING SECTION */
+  .section-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+  .pending-list{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;}
+  .pending-row{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+  .pending-row:last-child{border-bottom:none;}
+  .pending-info{font-size:13px;}
+  .pending-initials{font-weight:800;font-family:'IBM Plex Mono',monospace;color:var(--green-light);}
+  .pending-method{font-size:11px;color:var(--text3);margin-top:2px;}
+  .pending-actions{display:flex;gap:6px;}
+
+  /* STATUS */
+  #statusBar{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #333;padding:6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#22c55e;z-index:9999;}
+
+  @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)};.boards-grid{grid-template-columns:1fr};}
+  ::-webkit-scrollbar{width:4px;height:4px;}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- PIN SCREEN -->
+<div id="pinScreen">
+  <div class="pin-card">
+    <div class="pin-title">🔐 Admin Portal</div>
+    <div class="pin-sub">ParlayPro Live — Enter your PIN to continue</div>
+    <input type="password" class="pin-input" id="pinInput" maxlength="4" placeholder="••••" onkeydown="if(event.key==='Enter')checkPin()" />
+    <button class="pin-btn" onclick="checkPin()">UNLOCK</button>
+    <div class="pin-error" id="pinError"></div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="adminApp">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">🎯 ParlayPro Admin</div>
+      <div class="admin-subtitle" id="adminSubtitle">Loading boards...</div>
+    </div>
+    <div class="header-right">
+      <button class="btn-sm btn-green" onclick="refreshAll()">↻ Refresh All</button>
+      <button class="btn-sm btn-blue" onclick="window.open('/', '_blank')">👁 Player View</button>
+      <button class="btn-sm btn-red" onclick="lockScreen()">🔒 Lock</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Active Boards</div>
+        <div class="stat-value" id="statBoards">—</div>
+        <div class="stat-sub">Agent controlled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Squares Sold</div>
+        <div class="stat-value" id="statSold">—</div>
+        <div class="stat-sub">Across all boards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Collected</div>
+        <div class="stat-value" id="statCollected">—</div>
+        <div class="stat-sub">Confirmed payments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="statPending" style="color:var(--yellow);">—</div>
+        <div class="stat-sub">Awaiting confirmation</div>
+      </div>
+    </div>
+
+    <!-- ACTIVE BOARDS -->
+    <div class="section-title">
+      Active Boards
+      <button class="btn-sm btn-green" onclick="agentRescan()">🤖 Agent Rescan</button>
+    </div>
+    <div class="boards-grid" id="boardsGrid">
+      <div style="color:var(--text3);font-size:13px;padding:20px;">Loading...</div>
+    </div>
+
+    <!-- PENDING PAYMENTS -->
+    <div class="section-title">
+      Pending Payments
+      <button class="btn-sm btn-green" onclick="confirmAllPending()">✅ Confirm All</button>
+    </div>
+    <div class="pending-list" id="pendingList">
+      <div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">No pending payments</div>
+    </div>
+
+  </div>
+</div>
+
+<div id="statusBar">Loading...</div>
+
+<script>
+const ADMIN_PINS = ['2826','0614'];
+let adminPin = '';
+let allBoards = []; // [{game, sport, squaresData}]
+const SPORT_MAP = {'NBA':'nba','NHL':'nhl','MLB':'mlb','NFL':'nfl','MLS':'mls','WNBA':'wnba','MM_MEN':'ncaam','MM_WOMEN':'ncaaw'};
+
+function logStatus(msg, isError) {
+  const el = document.getElementById('statusBar');
+  if (el) { el.textContent = new Date().toLocaleTimeString() + ' | ' + msg; el.style.color = isError ? '#ef4444' : '#22c55e'; }
+}
+
+function checkPin() {
+  const pin = document.getElementById('pinInput').value.trim();
+  if (ADMIN_PINS.includes(pin)) {
+    adminPin = pin;
+    document.getElementById('pinScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block';
+    initAdmin();
+  } else {
+    document.getElementById('pinError').textContent = 'Incorrect PIN. Try again.';
+    document.getElementById('pinInput').value = '';
+  }
+}
+function lockScreen() {
+  document.getElementById('pinScreen').style.display = 'flex';
+  document.getElementById('adminApp').style.display = 'none';
+  document.getElementById('pinInput').value = '';
+}
+
+async function fetchEspnScores(sport) {
+  try {
+    const now = new Date();
+    const dateStr = now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+    const apiSport = SPORT_MAP[sport] || sport.toLowerCase();
+    const espnLeagueMap = {'nba':'basketball/nba','nhl':'hockey/nhl','mlb':'baseball/mlb','nfl':'football/nfl','mls':'soccer/usa.1','wnba':'basketball/wnba','ncaam':'basketball/mens-college-basketball','ncaaw':'basketball/womens-college-basketball'};
+    const league = espnLeagueMap[apiSport] || 'basketball/nba';
+    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${league}/scoreboard?dates=${dateStr}&_=${Date.now()}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return (data.events||[]).map(ev => {
+      const comp = ev.competitions&&ev.competitions[0];
+      const comps = comp&&comp.competitors;
+      const away = comps&&comps.find(c=>c.homeAway==='away');
+      const home = comps&&comps.find(c=>c.homeAway==='home');
+      const st = ev.status&&ev.status.type;
+      return { id:ev.id, sport, away:(away&&away.team&&away.team.abbreviation)||'AWAY', home:(home&&home.team&&home.team.abbreviation)||'HOME', awayScore:away&&parseInt(away.score)||0, homeScore:home&&parseInt(home.score)||0, status:st&&st.completed?'FINAL':st&&st.state==='in'?'LIVE':'UPCOMING', time:(st&&st.shortDetail)||'TBD', period:(comp&&comp.status&&comp.status.period)||0 };
+    });
+  } catch(e) { return []; }
+}
+
+async function fetchSquares(gameId) {
+  try {
+    const res = await fetch(`/api/squares?gameId=${encodeURIComponent(gameId)}`);
+    if (!res.ok) return {owners:{},pending:{}};
+    return await res.json();
+  } catch(e) { return {owners:{},pending:{}}; }
+}
+
+async function agentRescan() {
+  logStatus('Agent rescanning...', false);
+  const allSports = ['MM_WOMEN','MM_MEN','NBA','NHL','MLB','MLS','WNBA'];
+  const results = await Promise.allSettled(allSports.map(s=>fetchEspnScores(s)));
+  let allGames = [];
+  results.forEach(r=>{if(r.status==='fulfilled'&&r.value)allGames=allGames.concat(r.value);});
+  const live = allGames.filter(g=>g.status==='LIVE').sort((a,b)=>(parseInt(b.awayScore)+parseInt(b.homeScore))-(parseInt(a.awayScore)+parseInt(a.homeScore)));
+  const upcoming = allGames.filter(g=>g.status==='UPCOMING');
+  const best = [...live,...upcoming].slice(0,4);
+  allBoards = await Promise.all(best.map(async game => {
+    const squaresData = await fetchSquares(game.id);
+    return {game, sport:game.sport||'NBA', squaresData};
+  }));
+  renderBoards();
+  renderStats();
+  renderPending();
+  logStatus('Agent found ' + allBoards.length + ' boards', false);
+}
+
+async function refreshAll() {
+  logStatus('Refreshing all boards...', false);
+  allBoards = await Promise.all(allBoards.map(async b => {
+    const squaresData = await fetchSquares(b.game.id);
+    return {...b, squaresData};
+  }));
+  renderBoards();
+  renderStats();
+  renderPending();
+  logStatus('Refreshed ' + allBoards.length + ' boards', false);
+}
+
+function renderStats() {
+  let totalSold=0, totalCollected=0, totalPending=0;
+  const price = 10; // default
+  allBoards.forEach(b => {
+    const sold = Object.keys(b.squaresData.owners||{}).length;
+    const pending = Object.keys(b.squaresData.pending||{}).length;
+    totalSold += sold;
+    totalCollected += sold * price;
+    totalPending += pending;
+  });
+  document.getElementById('statBoards').textContent = allBoards.length;
+  document.getElementById('statSold').textContent = totalSold;
+  document.getElementById('statCollected').textContent = '$'+totalCollected.toFixed(0);
+  document.getElementById('statPending').textContent = totalPending;
+  document.getElementById('adminSubtitle').textContent = allBoards.length + ' boards active · ' + allBoards.filter(b=>b.game.status==='LIVE').length + ' LIVE';
+}
+
+function renderBoards() {
+  const grid = document.getElementById('boardsGrid');
+  if (!allBoards.length) { grid.innerHTML='<div style="color:var(--text3);font-size:13px;padding:20px;">No active boards found. Click Agent Rescan.</div>'; return; }
+  grid.innerHTML = allBoards.map((b, i) => {
+    const g = b.game;
+    const owners = b.squaresData.owners||{};
+    const pending = b.squaresData.pending||{};
+    const sold = Object.keys(owners).length;
+    const pendingCount = Object.keys(pending).length;
+    const pot = (sold * 10).toFixed(2);
+    const statusClass = g.status==='LIVE'?'status-live':g.status==='FINAL'?'status-final':'status-upcoming';
+    const statusText = g.status==='LIVE'?'🔴 LIVE Q'+g.period:g.status;
+    return `<div class="board-card">
+      <div class="board-card-header">
+        <div>
+          <div class="board-card-title">Board #${i+1} · ${g.away} @ ${g.home}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;">${g.sport||''}</div>
+        </div>
+        <span class="board-card-status ${statusClass}">${statusText}</span>
+      </div>
+      <div class="board-card-body">
+        <div class="board-stat-row"><span class="board-stat-label">Score</span><span class="board-stat-value" style="color:var(--yellow);">${g.status==='LIVE'||g.status==='FINAL'?g.awayScore+' — '+g.homeScore:'—'}</span></div>
+        <div class="board-stat-row"><span class="board-stat-label">Squares Sold</span><span class="board-stat-value">${sold}/100</span></div>
+        <div class="board-stat-row"><span class="board-stat-label">Pending</span><span class="board-stat-value" style="color:var(--yellow);">${pendingCount}</span></div>
+        <div class="board-stat-row"><span class="board-stat-label">Pot</span><span class="board-stat-value" style="color:var(--green-light);">$${pot}</span></div>
+        <div class="board-stat-row"><span class="board-stat-label">Numbers</span><span class="board-stat-value">${b.squaresData.numbersLocked?'🔒 Locked':'🔓 Open'}</span></div>
+      </div>
+      <div class="board-actions">
+        ${pendingCount>0?`<button class="board-btn btn-green" onclick="confirmBoardPending('${g.id}')">✅ Confirm ${pendingCount} Pending</button>`:''}
+        <button class="board-btn btn-blue" onclick="lockBoardNumbers('${g.id}')">🔒 Lock Numbers</button>
+        <button class="board-btn btn-red" onclick="resetBoard('${g.id}','${g.away} @ ${g.home}')">⨂ Reset Board</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderPending() {
+  const list = document.getElementById('pendingList');
+  let allPending = [];
+  allBoards.forEach(b => {
+    const pending = b.squaresData.pending||{};
+    Object.entries(pending).forEach(([idx, p]) => {
+      allPending.push({gameId:b.game.id, gameName:b.game.away+' @ '+b.game.home, idx:parseInt(idx), ...p});
+    });
+  });
+  if (!allPending.length) { list.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">No pending payments 🎉</div>'; return; }
+  list.innerHTML = allPending.map(p => `
+    <div class="pending-row">
+      <div class="pending-info">
+        <div><span class="pending-initials">${p.initials}</span> — Square #${p.idx} on ${p.gameName}</div>
+        <div class="pending-method">💳 ${p.payMethod||'unknown'} · $${p.amount||'?'}</div>
+      </div>
+      <div class="pending-actions">
+        <button class="btn-sm btn-green" onclick="confirmOne('${p.gameId}',[${p.idx}])">✅</button>
+        <button class="btn-sm btn-red" onclick="rejectOne('${p.gameId}',[${p.idx}])">✗</button>
+      </div>
+    </div>`).join('');
+}
+
+async function confirmBoardPending(gameId) {
+  try {
+    const r = await fetch('/api/confirm-pending',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({gameId,pin:adminPin})});
+    const d = await r.json();
+    if (d.ok){alert('Confirmed '+d.confirmed.length+' squares!');await refreshAll();}
+    else alert('Error: '+(d.error||'Failed'));
+  } catch(e){alert('Network error');}
+}
+async function confirmAllPending() {
+  for (const b of allBoards) {
+    const pending = b.squaresData.pending||{};
+    if (Object.keys(pending).length>0) await confirmBoardPending(b.game.id);
+  }
+}
+async function confirmOne(gameId, indices) {
+  try {
+    const r = await fetch('/api/confirm-pending',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({gameId,pin:adminPin,indices})});
+    const d = await r.json();
+    if (d.ok){await refreshAll();}else alert('Error: '+(d.error||'Failed'));
+  } catch(e){alert('Network error');}
+}
+async function rejectOne(gameId, indices) {
+  try {
+    const r = await fetch('/api/reject-pending',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({gameId,pin:adminPin,indices})});
+    const d = await r.json();
+    if (d.ok){await refreshAll();}else alert('Error: '+(d.error||'Failed'));
+  } catch(e){alert('Network error');}
+}
+async function lockBoardNumbers(gameId) {
+  alert('Open the player board and use Lock Numbers from there — it reads the current grid layout.');
+}
+async function resetBoard(gameId, name) {
+  if (!confirm('Reset board for '+name+'? This clears ALL squares.')) return;
+  try {
+    const r = await fetch('/api/reset-squares',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({gameId,pin:adminPin})});
+    const d = await r.json();
+    if (d.ok){alert('Board reset!');await refreshAll();}else alert('Error: '+(d.error||'Failed'));
+  } catch(e){alert('Network error');}
+}
+
+async function initAdmin() {
+  await agentRescan();
+  // Auto-refresh every 30 seconds
+  setInterval(refreshAll, 30000);
+}
+</script>
+</body>
+</html>
