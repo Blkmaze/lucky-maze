@@ -11,7 +11,7 @@
 *,::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0d0a14;--bg2:#130f1e;--surface:#1a1428;--surface2:#221a35;
-  --surface3:#2d2445;--border:#3d2f5c;--border2:#4f3d75;
+  --surface3:#2d2445;--border:#3d2f5c;--border2:#4f3d75;h
   --purple:#7c3aed;--purple2:#9d5cf6;--purple3:#b87eff;
   --gold:#f5c842;--gold2:#ffd700;--gold-dim:rgba(245,200,66,0.15);
   --text:#f0eaff;--text2:#a89ac5;--text3:#6b5a8a;
@@ -420,9 +420,9 @@ const DAILY_KEY = 'lm_daily_v2';
 const MISSIONS_KEY = 'lm_missions_v2';
 const MISSIONS_DATE_KEY = 'lm_mdate_v2';
 // SYMBOLS
-const SYMBOLS = ['7','L','B','C','A','K','Q','J','WLD'];
+const SYMBOLS = ['7','🍒','🔔','💎','⭐','🍋','🍊','🍇','WLD'];
 const WEIGHTS  = [5, 15, 12, 18, 20, 14, 10, 11, 5];
-const SYM_CLASS = {'7':'s777','L':'sLLL','B':'sBBB','C':'sCCC','A':'sAAA','K':'sKKK','Q':'sQQQ','J':'sJJJ','WLD':'sWLD'};
+const SYM_CLASS = {'7':'s777','🍒':'sLLL','🔔':'sBBB','💎':'sCCC','⭐':'sAAA','🍋':'sKKK','🍊':'sQQQ','🍇':'sJJJ','WLD':'sWLD'};
 function weightedRandom() {
   const total = WEIGHTS.reduce((a,b)=>a+b,0);
   let r = Math.random()*total;
